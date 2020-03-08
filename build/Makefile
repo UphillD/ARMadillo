@@ -1,0 +1,42 @@
+ARMGNU	= arm-none-eabi
+
+ASM	= $(ARMGNU)-as
+GCC	= $(ARMGNU)-gcc
+LD	= $(ARMGNU)-ld
+OBJCOPY	= $(ARMGNU)-objcopy
+OBJDUMP	= $(ARMGNU)-objdump
+
+ASMOPS	= --warn --fatal-warnings
+GCCOPS	= -Wall -Werror -O2 -nostdlib -nostartfiles -ffreestanding
+
+all: kernel.img
+
+KERNEL_DIR = ../src/kernel
+ASM_SRC = $(wildcard $(KERNEL_DIR)/*.S)
+ASM_OBJ = $(ASM_SRC:.S=.o)
+GCC_SRC = $(wildcard $(KERNEL_DIR)/*.c)
+GCC_OBJ = $(GCC_SRC:.c=.o)
+
+$(ASM_OBJ): $(ASM_SRC)
+	mkdir -p $(@D)
+	$(ASM) $(ASMOPS) $< -o $@
+
+$(GCC_OBJ): $(GCC_SRC)
+	mkdir -p $(@D)
+	$(GCC) $(GCCOPS) -c $< -o $@
+
+kernel.elf : linker.ld $(ASM_OBJ) $(GCC_OBJ)
+	$(LD) $(ASM_OBJ) $(GCC_OBJ) -T linker.ld -o kernel.elf
+	$(OBJDUMP) -D kernel.elf > kernel.list
+
+kernel.img : kernel.elf
+	$(OBJCOPY) --srec-forceS3 kernel.elf -O srec kernel.srec
+	$(OBJCOPY) kernel.elf -O binary kernel.img
+
+clean:
+	@rm -f $(ASM_OBJ)
+	@rm -f $(GCC_OBJ)
+	@rm -f *.elf
+	@rm -f *.list
+	@rm -f *.srec
+	@rm -f *.img
