@@ -6,26 +6,20 @@ extern uint32_t PUT32 (uint32_t, uint32_t);
 
 void uart_putc (uint32_t ch)
 {
-	while (1) {
-		if (GET32(AUX_MU_LSR_REG)&0x20) break;
-	}
+	while (!(GET32(AUX_MU_LSR_REG)&0x20));
 	PUT32(AUX_MU_IO_REG, ch);
-
 	return;
 }
 
 void uart_printc (char ch)
 {
-	uint32_t chInt = (uint32_t)(ch);
-	uart_putc(chInt);
-
+	uart_putc((uint32_t)(ch));
 	return;
 }
 
 void uart_printstr (char *str)
 {
-	uint32_t i;
-	for (i = 0; str[i] != '\0'; i++) {
+	for (uint32_t i = 0; str[i] != '\0'; i++) {
 		uart_printc(str[i]);
 	}
 	uart_printc ('\n');
@@ -34,18 +28,13 @@ void uart_printstr (char *str)
 
 uint32_t uart_getc (void)
 {
-	while (1) {
-		if(GET32(AUX_MU_LSR_REG)&0x01) break;
-	}
-
+	while (!(GET32(AUX_MU_LSR_REG)&0x01));
 	return GET32(AUX_MU_IO_REG);
 }
 
 char uart_scanc (void)
 {
-	char ch;
-	ch = (char)(uart_getc());
-	return ch;
+	return (char)(uart_getc());
 }
 
 void uart_init (void)

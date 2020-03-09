@@ -29,7 +29,7 @@ void heartbeat (void)
 	PUT32(GPCLR1, 1 << (47 - 32));
 	sleep(150);
 	PUT32(GPSET1, 1 << (47 - 32));
-	sleep(500);
+	sleep(600);
 
 	return;
 }
