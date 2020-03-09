@@ -1,7 +1,5 @@
+#include "kernel/heartbeat.h"
 #include "kernel/uart.h"
-
-extern void heartbeat (void);
-extern void init_led(void);
 
 int kernel_main (void)
 {
@@ -10,6 +8,7 @@ int kernel_main (void)
 
 	uart_init();
 	uart_printstr ("Greetings!\n");
+	uart_printstr ("Welcome to the kernel!\n");
 
 	while (1) {
 		heartbeat();

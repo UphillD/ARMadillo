@@ -21,8 +21,10 @@ void uart_printstr (char *str)
 {
 	for (uint32_t i = 0; str[i] != '\0'; i++) {
 		uart_printc(str[i]);
+		if (str[i] == '\n') {
+			uart_printc('\r');
+		}
 	}
-	uart_printc ('\n');
 	return;
 }
 
