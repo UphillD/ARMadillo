@@ -1,5 +1,5 @@
 #include "kernel/uart.h"
-#include "stdint.h"
+#include "common/stdint.h"
 
 extern uint32_t GET32 (uint32_t);
 extern uint32_t PUT32 (uint32_t, uint32_t);
