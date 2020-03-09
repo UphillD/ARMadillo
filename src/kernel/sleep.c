@@ -4,16 +4,12 @@ extern unsigned int GET32 (unsigned int);
 
 void sleep (unsigned int msec)
 {
-	unsigned int currTime;
-	unsigned int sleepTime = msec * 977;
 
-	while (1) {
-		currTime = GET32(SYSTIMER);
-		if ((currTime &= sleepTime) == sleepTime) break;
-	}
-	while (1) {
-		currTime = GET32(SYSTIMER);
-		if ((currTime &= sleepTime) == 0) break;
-	}
+	unsigned int currTime = GET32(SYSTIMER);
+	unsigned int sleepTime = msec * 977;
+	unsigned int wakeTime = currTime + sleepTime;
+	while ((currTime = GET32(SYSTIMER)) < wakeTime);
+
 	return;
+
 }
