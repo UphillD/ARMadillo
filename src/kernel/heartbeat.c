@@ -1,6 +1,7 @@
-extern unsigned int GET32 (unsigned int);
-extern unsigned int PUT32 (unsigned int, unsigned int);
-extern void sleep (unsigned int);
+#include "stdio.h"
+extern uint32_t GET32 (uint32_t);
+extern uint32_t PUT32 (uint32_t, uint32_t);
+extern void sleep (uint32_t);
 
 #define GPFSEL3	0x2020000C
 #define GPFSEL4	0x20200010
@@ -9,7 +10,7 @@ extern void sleep (unsigned int);
 
 void init_led (void)
 {
-	unsigned int ra;
+	uint32_t ra;
 
 	ra = GET32(GPFSEL4);
 	ra &= ~(7 << 21);
@@ -21,6 +22,8 @@ void init_led (void)
 
 void heartbeat (void)
 {
+	init_led();
+
 	PUT32(GPCLR1, 1 << (47 - 32));
 	sleep(150);
 	PUT32(GPSET1, 1 << (47 - 32));

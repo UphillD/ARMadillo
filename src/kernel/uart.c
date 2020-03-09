@@ -1,5 +1,7 @@
-extern unsigned int GET32 (unsigned int);
-extern unsigned int PUT32 (unsigned int, unsigned int);
+#include "stdint.h"
+
+extern uint32_t GET32 (uint32_t);
+extern uint32_t PUT32 (uint32_t, uint32_t);
 
 #define GPFSEL1		0x20200004
 #define GPSET0		0x2020001C
@@ -20,25 +22,27 @@ extern unsigned int PUT32 (unsigned int, unsigned int);
 #define AUX_MU_STAT_REG 0x20215064
 #define AUX_MU_BAUD_REG 0x20215068
 
-void uart_putc (unsigned int ch)
+void uart_putc (uint32_t ch)
 {
 	while (1) {
 		if (GET32(AUX_MU_LSR_REG)&0x20) break;
 	}
 	PUT32(AUX_MU_IO_REG, ch);
+
+	return;
 }
 
 void uart_printc (char ch)
 {
-	unsigned int chInt;
-	chInt = (unsigned int)(ch);
+	uint32_t chInt = (uint32_t)(ch);
 	uart_putc(chInt);
+
 	return;
 }
 
 void uart_printstr (char *str)
 {
-	unsigned int i;
+	uint32_t i;
 	for (i = 0; str[i] != '\0'; i++) {
 		uart_printc(str[i]);
 	}
@@ -76,6 +80,8 @@ void uart_init (void)
 	PUT32(GPFSEL1, ra);
 
 	PUT32(AUX_MU_CNTL_REG,3);
+
+	return;
 }
 
 void uart_printhex (unsigned int hex)

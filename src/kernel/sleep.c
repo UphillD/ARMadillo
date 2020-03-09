@@ -1,4 +1,4 @@
-#include <stdint.h>
+#include "stdint.h"
 
 extern unsigned int GET32 (uint32_t);
 

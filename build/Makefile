@@ -9,7 +9,7 @@ OBJDUMP	= $(ARMGNU)-objdump
 
 ASFLAGS = -mcpu=$(CPU) -g
 CFLAGS	= -mcpu=$(CPU) -Wall -Werror -O2 -nostdlib -nostartfiles \
-	-ffreestanding
+	-ffreestanding -I ../include
 
 KERNEL_DIR = ../src/kernel
 ASM_SRC = $(wildcard $(KERNEL_DIR)/*.S)
