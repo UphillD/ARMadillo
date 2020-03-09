@@ -14,7 +14,3 @@ PUT32:
 GET32:
 	ldr r0, [r0]
 	bx lr
-
-.globl delay
-delay:
-	bx lr

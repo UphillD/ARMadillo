@@ -1,13 +1,15 @@
-ARMGNU	= arm-none-eabi
+CPU 	= arm1176jzf-s
 
+ARMGNU	= arm-none-eabi
 AS	= $(ARMGNU)-as
 CC	= $(ARMGNU)-gcc
 LD	= $(ARMGNU)-ld
 OBJCOPY	= $(ARMGNU)-objcopy
 OBJDUMP	= $(ARMGNU)-objdump
 
-#ASFLAGS	= --warn --fatal-warnings
-CFLAGS	= -Wall -Werror -O2 -nostdlib -nostartfiles -ffreestanding
+ASFLAGS = -mcpu=$(CPU) -g
+CFLAGS	= -mcpu=$(CPU) -Wall -Werror -O2 -nostdlib -nostartfiles \
+	-ffreestanding
 
 KERNEL_DIR = ../src/kernel
 ASM_SRC = $(wildcard $(KERNEL_DIR)/*.S)
@@ -16,12 +18,6 @@ GCC_SRC = $(wildcard $(KERNEL_DIR)/*.c)
 GCC_OBJ = $(GCC_SRC:.c=.o)
 
 all: kernel.img
-
-#$(ASM_OBJ): $(ASM_SRC)
-#	$(ASM) $(ASMOPS) $< -o $@
-
-#$(GCC_OBJ): $(GCC_SRC)
-#	$(GCC) $(GCCOPS) -c $< -o $@
 
 kernel.elf : linker.ld $(ASM_OBJ) $(GCC_OBJ)
 	$(LD) $(ASM_OBJ) $(GCC_OBJ) -T linker.ld -o kernel.elf

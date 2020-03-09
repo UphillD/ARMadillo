@@ -3,8 +3,6 @@ extern void uart_init (void);
 extern void uart_printhex (unsigned int);
 extern void uart_putc (unsigned int);
 
-#define CARRIAGERET 	0x0D0A
-
 int kernel_main (void)
 {
 	heartbeat();
