@@ -24,6 +24,6 @@ typedef unsigned int uint32_t;
 typedef uint32_t uintptr_t;
 
 // Size type
-typedef unsigned int size_t
+typedef unsigned int size_t;
 
 #endif
