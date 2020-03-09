@@ -28,6 +28,24 @@ void uart_putc (unsigned int ch)
 	PUT32(AUX_MU_IO_REG, ch);
 }
 
+void uart_printc (char ch)
+{
+	unsigned int chInt;
+	chInt = (unsigned int)(ch);
+	uart_putc(chInt);
+	return;
+}
+
+void uart_printstr (char *str)
+{
+	unsigned int i;
+	for (i = 0; str[i] != '\0'; i++) {
+		uart_printc(str[i]);
+	}
+	uart_printc ('\n');
+	return;
+}
+
 unsigned int uart_getc (void)
 {
 	while (1) {

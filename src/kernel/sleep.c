@@ -1,15 +1,13 @@
-extern unsigned int GET32 (unsigned int);
+#include <stdint.h>
+
+extern unsigned int GET32 (uint32_t);
 
 #define SYSTIMER 0x20003004
 
-void sleep (unsigned int msec)
+void sleep (uint32_t msec)
 {
-
-	unsigned int currTime = GET32(SYSTIMER);
-	unsigned int sleepTime = msec * 977;
-	unsigned int wakeTime = currTime + sleepTime;
-	while ((currTime = GET32(SYSTIMER)) < wakeTime);
+	uint32_t wakeTime = GET32(SYSTIMER) + msec * 977;
+	while (GET32(SYSTIMER) < wakeTime);
 
 	return;
-
 }

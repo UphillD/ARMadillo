@@ -1,22 +1,16 @@
+#include <stdlib.h>
+
 extern void heartbeat (void);
 extern void uart_init (void);
-extern void uart_printhex (unsigned int);
-extern void uart_putc (unsigned int);
+extern void uart_printstr (char *str);
 
 int kernel_main (void)
 {
 	heartbeat();
 
 	uart_init();
-	uart_printhex(0xabcd1234);
-	uart_putc(0x0D);
-	uart_putc(0x0A);
-	uart_putc(0x48);
-	uart_putc(0x65);
-	uart_putc(0x6c);
-	uart_putc(0x6c);
-	uart_putc(0x6f);
-	uart_putc(0x21);
+	heartbeat();
+	uart_printstr ("Greetings!\n");
 
 	return 0;
 }
