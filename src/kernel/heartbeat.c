@@ -1,8 +1,8 @@
 #include "common/stdint.h"
 #include "kernel/heartbeat.h"
+#include "kernel/timer.h"
 extern uint32_t GET32 (uint32_t);
 extern uint32_t PUT32 (uint32_t, uint32_t);
-extern void sleep (uint32_t);
 
 void init_led (void)
 {
