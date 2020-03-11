@@ -2,7 +2,6 @@
 #define PERIPHERALS_H
 
 // ARM Timer
-
 enum {
 	ARM_TIMER_LOD	= 0x2000B400,
 	ARM_TIMER_VAL	= 0x2000B404,
@@ -23,6 +22,33 @@ enum {
 	IRQ_FIQ_CONTROL	  = 0x2000B210,
 	IRQ_ENABLE_BASIC  = 0x2000B218,
 	IRQ_DISABLE_BASIC = 0x2000B224,
+};
+
+// GPIO
+enum {
+	// The GPIO registers base address
+	GPIO_BASE	= 0x20200000,
+	// Controls actuation of pull up/down to all GPIO pins
+	GPPUD		= 0x20200094,
+	// Controls actuation of pull up/down to specific GPIO pin
+	GPPUDCLK0	= 0x20200098,
+};
+
+// AUX (UART0)
+enum {
+	AUX_BASE	= 0x20215000,
+	AUX_ENABLES     = 0x20215004,
+	AUX_MU_IO_REG   = 0x20215040,
+	AUX_MU_IER_REG  = 0x20215044,
+	AUX_MU_IIR_REG  = 0x20215048,
+	AUX_MU_LCR_REG  = 0x2021504C,
+	AUX_MU_MCR_REG  = 0x20215050,
+	AUX_MU_LSR_REG  = 0x20215054,
+	AUX_MU_MSR_REG  = 0x20215058,
+	AUX_MU_SCRATCH  = 0x2021505C,
+	AUX_MU_CNTL_REG = 0x20215060,
+	AUX_MU_STAT_REG = 0x20215064,
+	AUX_MU_BAUD_REG = 0x20215068,
 };
 
 enum {
