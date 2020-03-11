@@ -1,8 +1,12 @@
 #include "kernel/heartbeat.h"
 #include "kernel/uart.h"
 
-int kernel_main (void)
+int kernel_main (uint32_t r0, uint32_t r1, uint32_t atags)
 {
+	(void) r0;
+	(void) r1;
+	(void) atags;
+
 	init_led();
 	heartbeat();
 

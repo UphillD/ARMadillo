@@ -19,7 +19,7 @@ _start:
 	cmp r4, r9
 	blo 1b
 
-	bl kernel_main
+	blx kernel_main
 halt:
 	b halt
 
