@@ -4,5 +4,6 @@
 #include "common/stdint.h"
 
 void sleep (uint32_t);
+void timer_init (void);
 
 #endif
