@@ -1,7 +1,6 @@
 #include "common/stdint.h"
+#include "kernel/asm_utils.h"
 #include "kernel/timer.h"
-
-extern unsigned int GET32 (uint32_t);
 
 void sleep (uint32_t msec)
 {

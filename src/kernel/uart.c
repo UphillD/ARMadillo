@@ -1,8 +1,6 @@
-#include "kernel/uart.h"
 #include "common/stdint.h"
-
-extern uint32_t GET32 (uint32_t);
-extern uint32_t PUT32 (uint32_t, uint32_t);
+#include "kernel/asm_utils.h"
+#include "kernel/uart.h"
 
 void uart_putc (uint32_t ch)
 {

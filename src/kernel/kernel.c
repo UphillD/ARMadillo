@@ -1,3 +1,4 @@
+#include "common/stdint.h"
 #include "kernel/heartbeat.h"
 #include "kernel/uart.h"
 
