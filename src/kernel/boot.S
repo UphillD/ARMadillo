@@ -3,6 +3,7 @@
 // Boot entry function
 .globl _start
 _start:
+	// Set stack pointer to 0x8000
 	mov sp, #0x8000
 
 	// Clear bss section
@@ -20,6 +21,8 @@ _start:
 	cmp r4, r9
 	blo 1b
 
+	// Move execution to kernel_main
 	blx kernel_main
+
 halt:
 	b halt

@@ -3,6 +3,7 @@
 #include "kernel/heartbeat.h"
 #include "kernel/timer.h"
 
+// Initialize LED light
 void init_led (void)
 {
 	uint32_t cfg;
@@ -15,6 +16,7 @@ void init_led (void)
 	return;
 }
 
+// Produce heartbeat pulse on the LED
 void heartbeat (void)
 {
 	PUT32(GPCLR1, 1 << (47 - 32));
