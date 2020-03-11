@@ -1,5 +1,6 @@
 #include "common/stdint.h"
 #include "kernel/asm_utils.h"
+#include "kernel/peripherals.h"
 #include "kernel/uart.h"
 
 void uart_putc (uint32_t ch)

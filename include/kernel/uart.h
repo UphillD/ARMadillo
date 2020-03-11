@@ -12,10 +12,6 @@ enum {
 	// Controls actuation of pull up/down to specific GPIO pin
 	GPPUDCLK0	= (GPIO_BASE + 0x98),
 
-	GPFSEL1		= (GPIO_BASE + 0x04),
-	GPSET0		= (GPIO_BASE + 0x1C),
-	GPCLR0		= (GPIO_BASE + 0x28),
-
 	// The UART0 base address
 	AUX_BASE	= 0x20215000,
 
