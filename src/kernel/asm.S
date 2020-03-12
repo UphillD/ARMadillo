@@ -15,6 +15,11 @@ PUT32:
 	str r1, [r0]
 	bx lr
 
+.globl halt
+halt:
+	wfe
+	b halt
+
 .globl enable_irq
 enable_irq:
 	mrs r0, cpsr

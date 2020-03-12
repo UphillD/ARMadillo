@@ -65,10 +65,7 @@ reset:
 	blo 1b
 
 	// Move execution to kernel_main
-	blx kernel_main
-
-halt:
-	b halt
+	blx kernel_main4
 
 irq:
 	push {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, lr}
