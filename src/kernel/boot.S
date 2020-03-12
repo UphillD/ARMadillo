@@ -65,6 +65,7 @@ reset:
 	blo 1b
 
 	// Move execution to kernel_main
+	mov r2, #0x100
 	blx kernel_main
 
 irq:
