@@ -9,6 +9,7 @@ void uart_printstr (char *str);
 
 uint32_t uart_getc (void);
 char uart_scanc (void);
+char * uart_scanstr (void);
 
 void uart_init (void);
 void uart_printhex (unsigned int hex);

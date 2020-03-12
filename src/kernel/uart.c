@@ -38,6 +38,22 @@ char uart_scanc (void)
 	return (char)(uart_getc());
 }
 
+char * uart_scanstr (void)
+{
+	static char str[256];
+	uint32_t i;
+
+	for (i = 0; i < 256; i++) {
+		str[i] = uart_scanc();
+		uart_printc(str[i]);
+		if (str[i] == '\r') {
+			break;
+		}
+	}
+	str[i + 1] = '\0';
+	return str;
+}
+
 void uart_init (void)
 {
 	unsigned int ra;
