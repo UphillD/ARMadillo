@@ -5,7 +5,7 @@
 #include "types.h"
 
 // Initialize LED light
-void init_led (void)
+void led_init (void)
 {
 	uint32_t cfg;
 

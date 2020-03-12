@@ -50,16 +50,20 @@ char uart_scanc (void)
 char * uart_scanstr (void)
 {
 	static char str[256];
+	char tmp;
 	uint32_t i;
 
 	for (i = 0; i < 256; i++) {
-		str[i] = uart_scanc();
-		uart_printc(str[i]);
-		if (str[i] == '\r') {
+		tmp = uart_scanc();
+		if (tmp != '\r' && tmp != '\n') {
+			uart_printc(tmp);
+			str[i] = tmp;
+		} else {
+			uart_printc('\r');
+			str[i] = '\0';
 			break;
 		}
 	}
-	str[i + 1] = '\0';
 	return str;
 }
 

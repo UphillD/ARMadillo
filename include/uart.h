@@ -13,4 +13,5 @@ char * uart_scanstr (void);
 
 void uart_init (void);
 void uart_printhex (unsigned int hex);
+
 #endif

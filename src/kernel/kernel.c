@@ -1,23 +1,46 @@
 #include "addr.h"
 #include "asm.h"
 #include "heartbeat.h"
+#include "interrupts.h"
+#include "std.h"
 #include "timer.h"
 #include "types.h"
 #include "uart.h"
 
-volatile uint32_t irq_count;
-
-extern void enable_irq (void);
-extern void enable_fiq (void);
-
-void c_irq_handler (void)
+void c_enable_irq (uint32_t usec)
 {
-	PUT32(GPCLR1, 1 << (47 - 32));
-	sleep(100);
-	PUT32(GPSET1, 1 << (47 - 32));
-	sleep(100);
-	PUT32(ARM_TIMER_CLI, 0);
+	PUT32(IRQ_DISABLE_BASIC, 1);
+	timer_init(usec);
+	PUT32(IRQ_ENABLE_BASIC, 1);
+	enable_irq();
 	return;
+}
+
+void init_all(void)
+{
+	sleep(1000);
+	led_init();
+	uart_init();
+	uart_printstr("Greetings!\n");
+	uart_printstr("Welcome to the kernel!\n");
+	return;
+}
+
+void console (void)
+{
+	while(1) {
+		char *str;
+		str = uart_scanstr();
+		if (!(strcmp(str, "help"))) {
+			uart_printstr("Available Commands:\n");
+			uart_printstr("intr : sparks an interrupt\n");
+		} else if (!(strcmp(str, "intr"))) {
+			c_enable_irq(1000000);
+			uart_printstr("INTR sparked!\n");
+		} else {
+			uart_printstr("Command not recognized!\n");
+		}
+	}
 }
 
 int kernel_main (uint32_t r0, uint32_t r1, uint32_t atags)
@@ -26,24 +49,9 @@ int kernel_main (uint32_t r0, uint32_t r1, uint32_t atags)
 	(void) r1;
 	(void) atags;
 
-	PUT32(IRQ_DISABLE_BASIC, 1);
+	init_all();
 
-	init_led();
-	uart_init();
-	uart_printstr ("Greetings!\n");
-	uart_printstr ("Welcome to the kernel!\n");
+	console();
 
-	timer_init(1000000);
-	PUT32(IRQ_ENABLE_BASIC, 1);
-	irq_count = 0;
-	enable_irq();
-	char *str;
-	uart_printc('$');
-	uart_printc(' ');
-	while(1) {
-		str = uart_scanstr();
-		str[30] = '0';
-		continue;
-	}
 	return 0;
 }
