@@ -1,8 +1,8 @@
-#include "common/stdint.h"
-#include "kernel/asm_utils.h"
-#include "kernel/heartbeat.h"
-#include "kernel/peripherals.h"
-#include "kernel/timer.h"
+#include "addr.h"
+#include "asm.h"
+#include "heartbeat.h"
+#include "timer.h"
+#include "types.h"
 
 // Initialize LED light
 void init_led (void)

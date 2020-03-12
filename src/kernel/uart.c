@@ -1,7 +1,7 @@
-#include "common/stdint.h"
-#include "kernel/asm_utils.h"
-#include "kernel/peripherals.h"
-#include "kernel/uart.h"
+#include "addr.h"
+#include "asm.h"
+#include "uart.h"
+#include "types.h"
 
 // Prints a raw character in raw uint32_t format to the console
 void uart_putc (uint32_t c)

@@ -1,5 +1,5 @@
-#ifndef PERIPHERALS_H
-#define PERIPHERALS_H
+#ifndef ADDR_H
+#define ADDR_H
 
 // ARM Timer
 enum {

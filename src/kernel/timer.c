@@ -1,7 +1,7 @@
-#include "common/stdint.h"
-#include "kernel/asm_utils.h"
-#include "kernel/peripherals.h"
-#include "kernel/timer.h"
+#include "addr.h"
+#include "asm.h"
+#include "timer.h"
+#include "types.h"
 
 // Starts an INTR timer
 void timer_init (uint32_t usec)
