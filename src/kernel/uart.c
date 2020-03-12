@@ -3,41 +3,50 @@
 #include "kernel/peripherals.h"
 #include "kernel/uart.h"
 
-void uart_putc (uint32_t ch)
+// Prints a raw character in raw uint32_t format to the console
+void uart_putc (uint32_t c)
 {
-	while (!(GET32(AUX_MU_LSR_REG)&0x20));
-	PUT32(AUX_MU_IO_REG, ch);
+	while (!(GET32(AUX_MU_LSR_REG) & 0x20));
+	PUT32(AUX_MU_IO_REG, c);
 	return;
 }
 
+// Prints a character to the console
 void uart_printc (char ch)
 {
 	uart_putc((uint32_t)(ch));
 	return;
 }
 
+// Prints a string to the console
 void uart_printstr (char *str)
 {
-	for (uint32_t i = 0; str[i] != '\0'; i++) {
+	int i = 0;
+	while (str[i] != '\0') {
 		uart_printc(str[i]);
 		if (str[i] == '\n') {
 			uart_printc('\r');
 		}
+		i++;
 	}
 	return;
 }
 
+// Gets a character in raw uint32_t format from the console
 uint32_t uart_getc (void)
 {
-	while (!(GET32(AUX_MU_LSR_REG)&0x01));
+	while (!(GET32(AUX_MU_LSR_REG) & 0x01));
 	return GET32(AUX_MU_IO_REG);
 }
 
+// Gets a character from the console
 char uart_scanc (void)
 {
 	return (char)(uart_getc());
 }
 
+// Gets a string from the console
+//!! Needs work
 char * uart_scanstr (void)
 {
 	static char str[256];
@@ -54,9 +63,10 @@ char * uart_scanstr (void)
 	return str;
 }
 
+// Initialize UART0
 void uart_init (void)
 {
-	unsigned int ra;
+	unsigned int cfg;
 
 	PUT32(AUX_ENABLES, 1);
 	PUT32(AUX_MU_IER_REG, 0);
@@ -67,18 +77,19 @@ void uart_init (void)
 	PUT32(AUX_MU_IIR_REG, 0xC6);
 	PUT32(AUX_MU_BAUD_REG, 270);
 
-	ra = GET32(GPFSEL1);
-	ra &= ~(7 << 12); //gpio14
-	ra |= 2 << 12;    //alt5
-	ra &= ~(7 << 15); //gpio15
-	ra |= 2 << 15;    //alt5
-	PUT32(GPFSEL1, ra);
+	cfg = GET32(GPFSEL1);
+	cfg &= ~(7 << 12); //gpio14
+	cfg |= 2 << 12;    //alt5
+	cfg &= ~(7 << 15); //gpio15
+	cfg |= 2 << 15;    //alt5
+	PUT32(GPFSEL1, cfg);
 
 	PUT32(AUX_MU_CNTL_REG,3);
 
 	return;
 }
 
+// Prints a hex number to the console
 void uart_printhex (unsigned int hex)
 {
 	unsigned int i;

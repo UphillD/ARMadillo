@@ -2,16 +2,16 @@
 #define STDINT_H
 
 #ifndef NULL
-	#define NULL ((void *) 0)
+#define NULL ((void *) 0)
 #endif
 
 // Boolean type & Constants
 typedef int bool;
 #ifndef true
-	#define true 1
+#define true 1
 #endif
 #ifndef false
-	#define false 0
+#define false 0
 #endif
 
 // Integer types

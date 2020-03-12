@@ -33,7 +33,7 @@ int kernel_main (uint32_t r0, uint32_t r1, uint32_t atags)
 	uart_printstr ("Greetings!\n");
 	uart_printstr ("Welcome to the kernel!\n");
 
-	timer_init();
+	timer_init(1000000);
 	PUT32(IRQ_ENABLE_BASIC, 1);
 	irq_count = 0;
 	enable_irq();
