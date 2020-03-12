@@ -1,7 +1,7 @@
 #include "addr.h"
 #include "asm.h"
 #include "timer.h"
-#include "types.h"
+#include "common/types.h"
 
 // Starts an INTR timer
 void timer_init (uint32_t usec)

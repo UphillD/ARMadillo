@@ -2,7 +2,7 @@
 #include "asm.h"
 #include "led.h"
 #include "timer.h"
-#include "types.h"
+#include "common/types.h"
 
 // Initialize LED light
 void led_init (void)

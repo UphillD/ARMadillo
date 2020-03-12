@@ -1,5 +1,5 @@
-#ifndef STD_H
-#define STD_H
+#ifndef STRING_H
+#define STRING_H
 
 int strcmp (char *, char *);
 

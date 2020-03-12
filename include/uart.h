@@ -1,7 +1,7 @@
 #ifndef UART_H
 #define UART_H
 
-#include "types.h"
+#include "common/types.h"
 
 void uart_putc (uint32_t);
 void uart_printc (char);

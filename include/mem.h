@@ -3,7 +3,7 @@
 
 #include "atag.h"
 #include "common/list.h"
-#include "types.h"
+#include "common/types.h"
 
 // Set Page Size to 4KB
 #define PAGE_SIZE 4096

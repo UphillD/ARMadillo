@@ -1,7 +1,7 @@
 #include "common/lib.h"
 #include "atag.h"
 #include "mem.h"
-#include "types.h"
+#include "common/types.h"
 
 static void heap_init (uint32_t heapStart);
 /**

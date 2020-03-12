@@ -1,7 +1,7 @@
 #ifndef ATAG_H
 #define ATAG_H
 
-#include "types.h"
+#include "common/types.h"
 
 typedef enum {
 	NONE	= 0x00000000,

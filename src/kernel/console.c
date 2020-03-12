@@ -1,6 +1,6 @@
 #include "asm.h"
 #include "interrupts.h"
-#include "std.h"
+#include "common/string.h"
 #include "uart.h"
 
 void console (void)

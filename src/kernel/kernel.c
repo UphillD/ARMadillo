@@ -3,7 +3,7 @@
 #include "common/lib.h"
 #include "mem.h"
 #include "timer.h"
-#include "types.h"
+#include "common/types.h"
 #include "uart.h"
 
 void init_all(uint32_t atags)
