@@ -1,7 +1,8 @@
-#ifndef HEARTBEAT_H
-#define HEARTBEAT_H
+#ifndef LED_H
+#define LED_H
 
 void led_init (void);
+void led_pulse (void);
 void heartbeat (void);
 
 #endif

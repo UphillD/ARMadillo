@@ -1,5 +1,5 @@
 #include "console.h"
-#include "heartbeat.h"
+#include "led.h"
 #include "timer.h"
 #include "types.h"
 #include "uart.h"

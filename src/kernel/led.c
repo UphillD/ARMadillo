@@ -1,6 +1,6 @@
 #include "addr.h"
 #include "asm.h"
-#include "heartbeat.h"
+#include "led.h"
 #include "timer.h"
 #include "types.h"
 
@@ -14,6 +14,15 @@ void led_init (void)
 	cfg |= (1 << 21);
 	PUT32(GPFSEL4, cfg);
 
+	return;
+}
+
+void led_pulse (void)
+{
+	PUT32(GPCLR1, 1 << (47 - 32));
+	sleep(100);
+	PUT32(GPSET1, 1 << (47 - 32));
+	sleep(100);
 	return;
 }
 
