@@ -1,8 +1,14 @@
+/*
+ * ARMadillo/common/lib.c
+ *
+ * Provides any required miscellaneous functionality.
+ *
+ */
+
 #include "common/lib.h"
 #include "common/types.h"
 
-// bzero function
-// Zeroes out bytes starting at dest
+/* Zeroes out bytes starting at dest. */
 void bzero (void * dest, int bytes)
 {
 	char * d = dest;
@@ -11,8 +17,7 @@ void bzero (void * dest, int bytes)
 	}
 }
 
-// itoa function
-// Turns integer into string
+/* Turns integer into string. */
 char * itoa (int i)
 {
 	static char intbuf[12];

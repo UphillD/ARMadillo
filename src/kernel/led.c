@@ -1,10 +1,16 @@
+/*
+ * ARMadillo/kernel/led.c
+ *
+ * Provides LED functionality
+ */
+
 #include "addr.h"
 #include "asm.h"
 #include "led.h"
 #include "timer.h"
 #include "common/types.h"
 
-// Initialize LED light
+/* Initializes the LED. */
 void led_init (void)
 {
 	uint32_t cfg;
@@ -17,16 +23,18 @@ void led_init (void)
 	return;
 }
 
+/* Produces a single pulse on the LED. */
 void led_pulse (void)
 {
 	PUT32(GPCLR1, 1 << (47 - 32));
 	sleep(100);
 	PUT32(GPSET1, 1 << (47 - 32));
 	sleep(100);
+
 	return;
 }
 
-// Produce heartbeat pulse on the LED
+/* Produces a single heartbeat pulse on the LED. */
 void heartbeat (void)
 {
 	PUT32(GPCLR1, 1 << (47 - 32));

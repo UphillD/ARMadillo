@@ -10,18 +10,7 @@ static void heap_init (uint32_t heapStart);
  * Use best fit algorithm to find an allocation
  */
 
-typedef struct heap_segment {
-    struct heap_segment * next;
-    struct heap_segment * prev;
-    uint32_t isAllocated;
-    uint32_t segmentSize;  // Includes this header
-} heap_segment_t;
-
 static heap_segment_t * heapSegmentList_head;
-
-/**
- * End Heap Stuff
- */
 
 extern uint8_t __end;
 static uint32_t numPages;
@@ -89,6 +78,8 @@ void mem_init (atag_t * atags)
 	return;
 }
 
+// alloc_page function
+// Allocates a memory page (4KB), returns a pointer to the page
 void * alloc_page (void)
 {
 	page_t * page;
@@ -111,6 +102,8 @@ void * alloc_page (void)
 	return pageMem;
 }
 
+// free_page function
+// frees a page indicated by arg0, returns nothing
 void free_page (void * pagePtr)
 {
 	page_t * page;
@@ -135,7 +128,8 @@ static void heap_init (uint32_t heapStart)
 }
 
 
-void * kmalloc (uint32_t bytes) {
+void * kmalloc (uint32_t bytes)
+{
 	heap_segment_t * curr, *best = NULL;
 	int diff, best_diff = 0x7fffffff; // Max signed int
 
@@ -180,8 +174,9 @@ void kfree (void *ptr)
 {
 	heap_segment_t * seg;
 
-	if (!ptr)
+	if (!ptr) {
 		return;
+	}
 
 	seg = ptr - sizeof(heap_segment_t);
 	seg->isAllocated = 0;
@@ -199,4 +194,6 @@ void kfree (void *ptr)
 		seg->next = seg->next->next;
 		seg->segmentSize += seg->next->segmentSize;
 	}
+
+	return;
 }

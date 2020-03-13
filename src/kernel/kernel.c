@@ -12,7 +12,7 @@ void init_all(uint32_t atags)
 	led_init();
 	uart_init();
 	mem_init((atag_t * )atags);
-	char *str = (char *) kmalloc (sizeof(char));
+	char *str = kmalloc (sizeof(char));
 	str = "Check!\n";
 	uart_printstr(str);
 	uart_printstr("Greetings!\n");

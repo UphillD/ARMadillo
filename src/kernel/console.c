@@ -1,3 +1,10 @@
+/*
+ * ARMadillo/kernel/console.c
+ *
+ * Provides a serial console over UART0 for I/O
+ *
+ */
+
 #include "asm.h"
 #include "interrupts.h"
 #include "common/string.h"
@@ -22,4 +29,6 @@ void console (void)
 			uart_printstr("Command not recognized!\n");
 		}
 	}
+
+	return;
 }

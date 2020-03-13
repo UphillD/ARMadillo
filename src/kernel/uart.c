@@ -1,9 +1,16 @@
+/*
+ * ARMadillo/kernel/uart.c
+ *
+ * Provides UART0 functionality
+ *
+ */
+
 #include "addr.h"
 #include "asm.h"
 #include "uart.h"
 #include "common/types.h"
 
-// Prints a raw character in raw uint32_t format to the console
+/* Prints a raw character in raw uint32_t format to the console. */
 void uart_putc (uint32_t c)
 {
 	while (!(GET32(AUX_MU_LSR_REG) & 0x20));
@@ -11,14 +18,14 @@ void uart_putc (uint32_t c)
 	return;
 }
 
-// Prints a character to the console
+/* Prints a character to the console. */
 void uart_printc (char ch)
 {
 	uart_putc((uint32_t)(ch));
 	return;
 }
 
-// Prints a string to the console
+/* Prints a string to the console. */
 void uart_printstr (char *str)
 {
 	int i = 0;
@@ -32,21 +39,21 @@ void uart_printstr (char *str)
 	return;
 }
 
-// Gets a character in raw uint32_t format from the console
+/* Gets a character in raw uint32_t format from the console. */
 uint32_t uart_getc (void)
 {
 	while (!(GET32(AUX_MU_LSR_REG) & 0x01));
 	return GET32(AUX_MU_IO_REG);
 }
 
-// Gets a character from the console
+/* Gets a character from the console. */
 char uart_scanc (void)
 {
 	return (char)(uart_getc());
 }
 
-// Gets a string from the console
-//!! Needs work
+/* Gets a string from the console. */
+/* !! Needs work !! */
 char * uart_scanstr (void)
 {
 	static char str[256];
@@ -67,11 +74,9 @@ char * uart_scanstr (void)
 	return str;
 }
 
-// Initialize UART0
+/* Initializes the UART0 serial port. */
 void uart_init (void)
 {
-	unsigned int cfg;
-
 	PUT32(AUX_ENABLES, 1);
 	PUT32(AUX_MU_IER_REG, 0);
 	PUT32(AUX_MU_CNTL_REG, 0);
@@ -81,6 +86,7 @@ void uart_init (void)
 	PUT32(AUX_MU_IIR_REG, 0xC6);
 	PUT32(AUX_MU_BAUD_REG, 270);
 
+	uint32_t cfg;
 	cfg = GET32(GPFSEL1);
 	cfg &= ~(7 << 12); //gpio14
 	cfg |= 2 << 12;    //alt5
@@ -93,25 +99,23 @@ void uart_init (void)
 	return;
 }
 
-// Prints a hex number to the console
-void uart_printhex (unsigned int hex)
+/* Prints an 8 digit hex number to the console */
+void uart_printhex (uint32_t hex)
 {
-	unsigned int i;
-	unsigned int out;
+	uint32_t i = 32;
+	uint32_t out;
 
-	i = 32;
-	while (1)
-	{
+	do {
 		i -= 4;
-		out = (hex >> i)&0xF;
+		out = (hex >> i) & 0xF;
 		if (out > 9) {
 			out += 0x37;
 		} else {
 			out += 0x30;
 		}
 		uart_putc(out);
-		if (i == 0) break;
-	}
+	} while (i != 0);
 	uart_putc(0x20);
+
 	return;
 }

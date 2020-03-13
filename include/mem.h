@@ -23,6 +23,13 @@ typedef struct page {
 	define_link(page);
 } page_t;
 
+typedef struct heap_segment {
+    struct heap_segment * next;
+    struct heap_segment * prev;
+    uint32_t isAllocated;
+    uint32_t segmentSize;  // Includes this header
+} heap_segment_t;
+
 
 uint32_t mem_getSize (atag_t *);
 void mem_init (atag_t *);

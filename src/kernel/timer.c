@@ -1,9 +1,17 @@
+/*
+ * ARMadillo/kernel/timer.c
+ *
+ * Provides timer functionality
+ *
+ */
+
 #include "addr.h"
 #include "asm.h"
 #include "timer.h"
 #include "common/types.h"
 
-// Starts an INTR timer
+/* Starts an INTR timer */
+/* utilizes the ARM timer */
 void timer_init (uint32_t usec)
 {
 	PUT32(ARM_TIMER_CTL, 0x003E0000);
@@ -16,8 +24,8 @@ void timer_init (uint32_t usec)
 	return;
 }
 
-// Sleep function
-// sleep for msec millisecond
+/* Sleeps for msec millisecond */
+/* utilizes the 64-bit free running timer */
 void sleep (uint32_t msec)
 {
 	uint32_t wakeTime = GET32(SYSTIMERCLO) + msec * 977;
