@@ -3,6 +3,6 @@
 
 void led_init (void);
 void led_pulse (void);
-void heartbeat (void);
+void led_heartbeat (void);
 
 #endif

@@ -3,5 +3,6 @@
 
 void bzero (void *, int);
 char * itoa(int);
+int atoi (char *);
 
 #endif

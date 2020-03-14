@@ -8,7 +8,7 @@
 #include "asm.h"
 #include "interrupts.h"
 #include "common/string.h"
-#include "uart.h"
+#include "drivers/uart.h"
 
 void console (void)
 {

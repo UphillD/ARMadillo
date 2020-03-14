@@ -1,9 +1,9 @@
 #ifndef MEM_H
 #define MEM_H
 
-#include "atag.h"
 #include "common/list.h"
 #include "common/types.h"
+#include "atag.h"
 
 // Set Page Size to 4KB
 #define PAGE_SIZE 4096

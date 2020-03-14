@@ -7,7 +7,7 @@
 
 #include "common/types.h"
 #include "common/lib.h"
-#include "uart.h"
+#include "drivers/uart.h"
 #include "interrupts.h"
 
 static interrupt_registers_t * interrupt_regs;
