@@ -36,8 +36,9 @@ kernel.img : kernel.elf
 
 clean:
 	@rm -f $(ASM_OBJ)
-	@rm -f $(GCC_OBJ)
 	@rm -f $(COM_OBJ)
+	@rm -f $(DRI_OBJ)
+	@rm -f $(KER_OBJ)
 	@rm -f *.elf
 	@rm -f *.list
 	@rm -f *.srec
