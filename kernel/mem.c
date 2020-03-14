@@ -51,14 +51,17 @@ void mem_init (atag_t * atags)
 	// Allocate space for all those pages' metadata.
 	// Start this block after the kernel image
 	uint32_t pageArrayLen = sizeof(page_t) * numPages;
-	pagesArray = (page_t *)&__end;
+	pagesArray = (page_t *)((uint32_t)&__end + KERNEL_STACK_SIZE +IRQ_STACK_SIZE);
 	bzero(pagesArray, pageArrayLen);
 	init_list(freePages);
+
+    uint32_t pageArrayEnd = (uint32_t)pagesArray + pageArrayLen;
+    pageArrayEnd += pageArrayEnd % PAGE_SIZE ? PAGE_SIZE - (pageArrayEnd % PAGE_SIZE) : 0;
 
 	// Iterate over all pages and mark them with the appropriate flags.
 
 	// Start with the kernel pages
-	uint32_t kernelPages = ((uint32_t)&__end) / PAGE_SIZE;
+	uint32_t kernelPages = (pageArrayEnd) / PAGE_SIZE;
 	for (i = 0; i < kernelPages; i++) {
 		pagesArray[i].vaddr_mapped = i * PAGE_SIZE;
 		pagesArray[i].flags.allocated = 1;
@@ -79,7 +82,6 @@ void mem_init (atag_t * atags)
 	}
 
 	// Initialize the kernel heap
-	uint32_t pageArrayEnd = (uint32_t)&__end + pageArrayLen;
 	heap_init(pageArrayEnd);
 
 	return;

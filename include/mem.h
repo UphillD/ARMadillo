@@ -9,6 +9,8 @@
 #define PAGE_SIZE 4096
 // Set Kernel Heap Size to 1MB
 #define KERNEL_HEAP_SIZE (1024 * 1024)
+#define KERNEL_STACK_SIZE PAGE_SIZE
+#define IRQ_STACK_SIZE PAGE_SIZE
 
 typedef struct {
 	uint8_t allocated: 1;			// This page is allocated to something
