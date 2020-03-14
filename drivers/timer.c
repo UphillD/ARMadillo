@@ -1,14 +1,14 @@
 /*
- * ARMadillo/kernel/timer.c
+ * ARMadillo/drivers/timer.c
  *
  * Provides timer functionality
  *
  */
 
+#include "common/types.h"
 #include "addr.h"
 #include "asm.h"
 #include "timer.h"
-#include "common/types.h"
 
 /* Starts an INTR timer */
 /* utilizes the ARM timer */

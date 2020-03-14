@@ -1,7 +1,7 @@
 /*
  * ARMadillo/common/string.c
  *
- * Implements any required string-related functionality
+ * Provides any required string-related functionality.
  *
  */
 

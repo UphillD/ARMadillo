@@ -1,3 +1,10 @@
+/*
+ * ARMadillo/kernel/asm.S
+ *
+ * Provides any required miscellaneous functionality in assembly
+ *
+ */
+
 .section ".text"
 
 .globl GET32

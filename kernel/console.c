@@ -13,6 +13,7 @@
 void console (void)
 {
 	while(1) {
+		uart_printstr("$ ");
 		char *str;
 		str = uart_scanstr();
 		if (!(strcmp(str, "help"))) {

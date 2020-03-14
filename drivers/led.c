@@ -1,14 +1,14 @@
 /*
- * ARMadillo/kernel/led.c
+ * ARMadillo/drivers/led.c
  *
  * Provides LED functionality
  */
 
+#include "common/types.h"
 #include "addr.h"
 #include "asm.h"
 #include "led.h"
 #include "timer.h"
-#include "common/types.h"
 
 /* Initializes the LED. */
 void led_init (void)

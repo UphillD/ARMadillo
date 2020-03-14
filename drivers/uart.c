@@ -1,14 +1,14 @@
 /*
- * ARMadillo/kernel/uart.c
+ * ARMadillo/drivers/uart.c
  *
  * Provides UART0 functionality
  *
  */
 
+#include "common/types.h"
 #include "addr.h"
 #include "asm.h"
 #include "uart.h"
-#include "common/types.h"
 
 /* Prints a raw character in raw uint32_t format to the console. */
 void uart_putc (uint32_t c)

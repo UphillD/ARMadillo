@@ -1,7 +1,14 @@
+/*
+ * ARMadillo/kernel/mem.c
+ *
+ * Provides memory management functionality
+ *
+ */
+
 #include "common/lib.h"
+#include "common/types.h"
 #include "atag.h"
 #include "mem.h"
-#include "common/types.h"
 
 static void heap_init (uint32_t heapStart);
 /**

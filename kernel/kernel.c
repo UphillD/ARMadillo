@@ -12,11 +12,11 @@ void init_all(uint32_t atags)
 	led_init();
 	uart_init();
 	mem_init((atag_t * )atags);
-	char *str = kmalloc (sizeof(char));
-	str = "Check!\n";
-	uart_printstr(str);
 	uart_printstr("Greetings!\n");
 	uart_printstr("Welcome to the kernel!\n");
+	/* bodge */
+	uart_scanc();
+
 	return;
 }
 
