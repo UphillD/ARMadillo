@@ -28,6 +28,13 @@ enum {
 enum {
 	// The GPIO registers base address
 	GPIO_BASE	= 0x20200000,
+	GPFSEL1		= 0x20200004,
+	GPSET0		= 0x2020001C,
+	GPCLR0		= 0x20200028,
+	GPFSEL3		= 0x2020000C,
+	GPFSEL4		= 0x20200010,
+	GPSET1		= 0x20200020,
+	GPCLR1		= 0x2020002C,
 	// Controls actuation of pull up/down to all GPIO pins
 	GPPUD		= 0x20200094,
 	// Controls actuation of pull up/down to specific GPIO pin
@@ -53,13 +60,6 @@ enum {
 
 enum {
 	SYSTIMERCLO	= 0x20003004,
-	GPFSEL1		= 0x20200004,
-	GPSET0		= 0x2020001C,
-	GPCLR0		= 0x20200028,
-	GPFSEL3		= 0x2020000C,
-	GPFSEL4		= 0x20200010,
-	GPSET1		= 0x20200020,
-	GPCLR1		= 0x2020002C,
 };
 
 #endif

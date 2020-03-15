@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Unmount the SD Card if it was automatically mounted
+umount /dev/mmcblk0p1
+umount /dev/mmcblk0p2
+
 # Create directory /mount/raspberry
 mkdir -p /mount/raspberry
 

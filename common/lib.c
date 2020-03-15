@@ -8,6 +8,14 @@
 #include "common/lib.h"
 #include "common/types.h"
 
+void memcpy(void * dest, const void * src, int bytes) {
+    char * d = dest;
+    const char * s = src;
+    while (bytes--) {
+        *d++ = *s++;
+    }
+}
+
 /* Zeroes out bytes starting at dest. */
 void bzero (void * dest, int bytes)
 {
@@ -15,6 +23,22 @@ void bzero (void * dest, int bytes)
 	while (bytes--) {
 		*d++ = 0;
 	}
+}
+
+/* Returns the minimum of two numbers. */
+int min (int int1, int int2) {
+	if (int1 < int2)
+		return int1;
+	else
+		return int2;
+}
+
+/* Returns the maximum of two numbers. */
+int max (int int1, int int2) {
+	if (int1 < int2)
+		return int2;
+	else
+		return int1;
 }
 
 /* Turns integer into string. */
@@ -59,25 +83,25 @@ char * itoa (int i)
 }
 
 /* Turns string into integer. */
-int atoi (char * num)
+int atoi (char * str)
 {
 	int res = 0, power = 0, digit, i;
-	char * start = num;
+	char * start = str;
 
 	/* Find the end of the number. */
-	while (*num >= '0' && *num <= '9')
-		num++;
+	while (*str >= '0' && *str <= '9')
+		str++;
 
-	num--;
+	str--;
 
-	while (num != start) {
-		digit = *num - '0';
+	while (str != start) {
+		digit = *str - '0';
 		for (i = 0; i < power; i++) {
 			digit *= 10;
 		}
 		res += digit;
 		power++;
-		num--;
+		str--;
 	}
 
 	return res;

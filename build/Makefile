@@ -8,8 +8,9 @@ OBJCOPY	= $(ARMGNU)-objcopy
 OBJDUMP	= $(ARMGNU)-objdump
 
 ASFLAGS = -mcpu=$(CPU) -g
-CFLAGS	= -mcpu=$(CPU) -Wall -Werror -O2 -nostdlib -nostartfiles \
-	-ffreestanding -I ../include
+CFLAGS	= -mcpu=$(CPU) -g -Wall -Werror -Wextra -O2 -fpic	\
+	-nostdlib -nostartfiles -ffreestanding 			\
+	-I ../include
 
 COMMON_DIR = ../common
 DRIVER_DIR = ../drivers

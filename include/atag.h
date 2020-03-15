@@ -26,7 +26,7 @@ typedef struct {
 } cmdline_t;
 
 typedef struct atag {
-	uint32_t tagSize;
+	uint32_t tag_size;
 	atag_tag_t tag;
 	union {
 		mem_t mem;

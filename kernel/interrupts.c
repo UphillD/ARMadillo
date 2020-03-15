@@ -38,18 +38,17 @@ void interrupts_init (void)
  /* Checks if any interrupts are pending, executes the appropriate handler. */
 void irq_handler(void)
 {
-	for (int i = 0; i < NUM_IRQS; i++) {
+	for (int j = 0; j < NUM_IRQS; j++) {
 		/* If the interrupt is pending and there is a handler, */
 		/* execute the handler. */
-		if (IRQ_IS_PENDING(interrupt_regs, i)  && (handlers[i] != 0)) {
-			clearers[i]();
+		if (IRQ_IS_PENDING(interrupt_regs, j)  && (handlers[j] != 0)) {
+			clearers[j]();
 			ENABLE_INTERRUPTS();
-			handlers[i]();
+			handlers[j]();
 			DISABLE_INTERRUPTS();
-			break;
+			return;
 		}
 	}
-	return;
 }
 
 /* Dummy interrupt handlers. */
@@ -104,10 +103,9 @@ void register_irq_handler(irq_number_t irq_num, interrupt_handler_f handler, \
 		handlers[irq_num] = handler;
 		clearers[irq_num] = clearer;
 		interrupt_regs->irq_gpu_enable1 |= (1 << irq_pos);
-	}
-    /*else {
-        printf("ERROR: CANNOT REGISTER IRQ HANDLER: INVALID IRQ NUMBER: %d\n", irq_num);
-    }*/
+	} else {
+        uart_printstr("ERROR: CANNOT REGISTER IRQ HANDLER: INVALID IRQ NUMBER: \n");
+    }
 }
 
 /* Unregisters the appropriate IRQ handler. */
@@ -131,7 +129,7 @@ void unregister_irq_handler(irq_number_t irq_num)
 		clearers[irq_num] = 0;
 		interrupt_regs->irq_gpu_disable1 |= (1 << irq_pos);
 	}
-   /*else {
-        printf("ERROR: CANNOT UNREGISTER IRQ HANDLER: INVALID IRQ NUMBER: %d\n", irq_num);
-    }*/
+   else {
+        uart_printstr("ERROR: CANNOT UNREGISTER IRQ HANDLER: INVALID IRQ NUMBER: \n");
+    }
 }

@@ -11,6 +11,7 @@
 #include "addr.h"
 #include "asm.h"
 #include "interrupts.h"
+#include "process.h"
 
 /* Sleeps for msec millisecond */
 /* utilizes the 64-bit free running timer */
@@ -31,9 +32,7 @@ static timer_registers_t * timer_regs;
 /* The IRQ handler. */
 static void timer_irq_handler (void)
 {
-	uart_printstr("timeout\n");
-	timer_set(3000000);
-	return;
+	schedule();
 }
 
 /* The IRQ clearer. */

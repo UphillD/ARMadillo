@@ -8,7 +8,4 @@ void PUT32 (uint32_t, uint32_t);
 
 void _halt (void);
 
-void enable_irq (void);
-void enable_fiq (void);
-
 #endif
