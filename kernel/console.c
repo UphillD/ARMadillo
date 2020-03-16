@@ -74,6 +74,9 @@ void kernel_process_mutex (void)
 
 void console (void)
 {
+	kprintf("Greetings, and welcome to ARMadillo!\n");
+	kprintf("This is a demo console to illustrate the different capabilities of this OS.\n");
+	kprintf("Please enter 'help' for the available commands!.\n");
 	while(1) {
 		uart_printstr("$ ");
 		char *str;
@@ -82,11 +85,11 @@ void console (void)
 		switch (option) {
 		case (0):
 			kprintf("Available commands:\n");
-			kprintf("help: prints this message.\n");
-			kprintf("intr: sparks a repeatable interrupt.\n");
-			kprintf("proc: displays context switching capability.\n");
-			kprintf("lock: displays context switching capability /w locks.\n");
-			kprintf("halt: halts.\n");
+			kprintf("help\t: prints this message.\n");
+			kprintf("intr\t: sparks a repeatable interrupt.\n");
+			kprintf("proc\t: displays context switching capability.\n");
+			kprintf("lock\t: displays context switching capability /w locks.\n");
+			kprintf("halt\t: halts.\n");
 			break;
 		case (1):
 			kprintf("Setting interrupt..\n");
