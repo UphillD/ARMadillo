@@ -5,7 +5,9 @@
  *
  */
 
+#include "common/lib.h"
 #include "common/string.h"
+#include "common/types.h"
 #include "drivers/timer.h"
 #include "drivers/uart.h"
 #include "mutex.h"
@@ -18,6 +20,7 @@ static int cmd_option (char * str)
 	else if (!strcmp(str, "intr")) return 1;
 	else if (!strcmp(str, "proc")) return 2;
 	else if (!strcmp(str, "lock")) return 3;
+	else if (!strcmp(str, "fpuo")) return 4;
 	else if (!strcmp(str, "halt")) return 9;
 	else return -1;
 }
@@ -81,6 +84,7 @@ void console (void)
 		uart_printstr("$ ");
 		char *str;
 		str = uart_scanstr();
+		kprintf("\n");
 		int option = cmd_option(str);
 		switch (option) {
 		case (0):
@@ -89,6 +93,7 @@ void console (void)
 			kprintf("intr\t: sparks a repeatable interrupt.\n");
 			kprintf("proc\t: displays context switching capability.\n");
 			kprintf("lock\t: displays context switching capability /w locks.\n");
+			kprintf("fpuo\t: illustrates floating point operation capability.\n");
 			kprintf("halt\t: halts.\n");
 			break;
 		case (1):
@@ -113,6 +118,15 @@ void console (void)
 			create_kernel_thread(user_process_mutex, "USER_LOCK", 9);
 			kprintf("Launching kernel process /w lock..\n");
 			kernel_process_mutex();
+			break;
+		case (4):
+			kprintf("x\t= 256\t= 0x00000100\n");
+			uint32_t x = 0x100;
+			kprintf("y\t= 1.5\t\n");
+			float y = 1.5;
+			kprintf("x * y\t= 384\t= 0x");
+			uart_printhex (float_mul(x, y));
+			kprintf("\n");
 			break;
 		case (9):
 			kprintf("Goodbye!\n");

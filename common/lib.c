@@ -90,3 +90,8 @@ int atoi (char * str)
 
 	return res;
 }
+
+uint32_t float_mul (uint32_t c, float f)
+{
+	return c * f;
+}

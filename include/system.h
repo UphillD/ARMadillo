@@ -16,4 +16,7 @@ void PUT32 (uint32_t, uint32_t);
 /* include the try_lock function from lock.S. */
 int try_lock (int *);
 
+/* include the fpu_init function from fpu.S. */
+void fpu_init (void);
+
 #endif

@@ -15,6 +15,7 @@
 #include "interrupts.h"
 #include "mem.h"
 #include "process.h"
+#include "system.h"
 
 void kprintf (const char * str, ...)
 {
@@ -57,6 +58,10 @@ void init_all (uint32_t atags)
 	/* Initialize UART0. */
 	uart_init();
 	kprintf("[ OK ] UART0 initialized.\n");
+
+	/* Initialize FPU. */
+	fpu_init();
+	kprintf("[ OK ] FPU initialized.\n");
 
 	/* Initialize LED. */
 	led_init();
