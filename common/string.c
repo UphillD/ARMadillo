@@ -5,7 +5,15 @@
  *
  */
 
+#include "common/types.h"
 #include "common/string.h"
+
+void memset (void * dst, uint8_t c, int bytes)
+{
+	uint8_t * d = dst;
+	while (bytes--)
+		*d++ = c;
+}
 
 /* Copies bytes of memory from src to dest. */
 void memcpy (void * dst, const void * src, int bytes)

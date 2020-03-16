@@ -7,6 +7,7 @@
 
 #include "common/types.h"
 #include "common/lib.h"
+#include "common/string.h"
 #include "drivers/uart.h"
 #include "addr.h"
 #include "interrupts.h"
@@ -57,8 +58,8 @@ bool IRQ_IS_PENDING (interrupt_registers_t * interrupt_regs, int irq_num)
 void interrupts_init (void)
 {
 	interrupt_regs = (interrupt_registers_t *) IRQ_BASIC;
-	bzero(handlers, sizeof(interrupt_handler_f) * NUM_IRQS);
-	bzero(clearers, sizeof(interrupt_clearer_f) * NUM_IRQS);
+	memset(handlers, 0, sizeof(interrupt_handler_f) * NUM_IRQS);
+	memset(clearers, 0, sizeof(interrupt_clearer_f) * NUM_IRQS);
 	/* Disable all interrupts. */
 	interrupt_regs->irq_basic_disable = 0xffffffff;
 	interrupt_regs->irq_gpu_disable1 = 0xffffffff;

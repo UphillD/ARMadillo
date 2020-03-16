@@ -8,14 +8,6 @@
 #include "common/lib.h"
 #include "common/types.h"
 
-/* Zeroes out bytes starting at dest. */
-void bzero (void * dest, int bytes)
-{
-	char * d = dest;
-	while (bytes--)
-		*d++ = 0;
-}
-
 /* Returns the minimum of two numbers. */
 int min (int int1, int int2) {
 	if (int1 < int2)

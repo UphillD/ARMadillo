@@ -1,3 +1,4 @@
+ARCH	= armv6
 CPU 	= arm1176jzf-s
 
 ARMGNU	= arm-none-eabi
@@ -7,10 +8,12 @@ LD	= $(ARMGNU)-ld
 OBJCOPY	= $(ARMGNU)-objcopy
 OBJDUMP	= $(ARMGNU)-objdump
 
-ASFLAGS = -mcpu=$(CPU) -g
-CFLAGS	= -mcpu=$(CPU) -g -Wall -Werror -Wextra -O2 -fpic	\
+ASFLAGS = -mcpu=$(CPU) -mfpu=vfp		 		\
+	-g -Wall -Werror -Wextra
+CFLAGS	= -mcpu=$(CPU) -mfpu=vfp -mtune=$(CPU)			\
+	-g -Wall -Werror -Wextra -O2 -fpic			\
 	-nostdlib -nostartfiles -ffreestanding 			\
-	-I ../include
+	-mhard-float -I ../include
 
 COMMON_DIR = ../common
 DRIVER_DIR = ../drivers

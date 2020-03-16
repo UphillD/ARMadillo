@@ -10,6 +10,7 @@
 #include "mem.h"
 #include "atag.h"
 #include "common/lib.h"
+#include "common/string.h"
 #include "common/types.h"
 
 /*
@@ -67,7 +68,7 @@ void mem_init (atag_t * atags) {
 	 * Start this block just after the stack. */
 	page_array_len = sizeof(page_t) * num_pages;
 	all_pages_array = (page_t *)((uint32_t)&__end + KERNEL_STACK_SIZE);
-	bzero(all_pages_array, page_array_len);
+	memset(all_pages_array, 0, page_array_len);
 	INITIALIZE_LIST(free_pages);
 
 	/* Find where the page metadata ends and round up to the nearest page. */
@@ -118,7 +119,7 @@ void * alloc_page (void)
 	page_mem = (void *)((page - all_pages_array) * PAGE_SIZE);
 
 	/* Zero out the page. */
-	bzero(page_mem, PAGE_SIZE);
+	memset(page_mem, 0, PAGE_SIZE);
 
 	/* Return a pointer to the page. */
 	return page_mem;
@@ -141,7 +142,7 @@ void free_page (void * ptr)
 
 static void heap_init(uint32_t heap_start) {
 	heap_segment_list_head = (heap_segment_t *) heap_start;
-	bzero(heap_segment_list_head, sizeof(heap_segment_t));
+	memset(heap_segment_list_head, 0, sizeof(heap_segment_t));
 	heap_segment_list_head->segment_size = KERNEL_HEAP_SIZE;
 }
 
@@ -171,7 +172,7 @@ void * kmalloc(uint32_t bytes)
 	 * Since our segment headers are rather large, the criterion for splitting the segment is that
 	 * when split, the segment not being requested should be twice a header size. */
 	if (best_diff > (int)(2 * sizeof(heap_segment_t))) {
-		bzero(((void*)(best)) + bytes, sizeof(heap_segment_t));
+		memset(((void*)(best)) + bytes, 0, sizeof(heap_segment_t));
 		curr = best->next;
 		best->next = ((void*)(best)) + bytes;
 		best->next->next = curr;
