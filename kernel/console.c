@@ -6,7 +6,9 @@
  */
 
 #include "common/string.h"
+#include "drivers/timer.h"
 #include "drivers/uart.h"
+#include "process.h"
 #include "system.h"
 
 static int cmd_option (char * str)
@@ -18,6 +20,23 @@ static int cmd_option (char * str)
 	else return -1;
 }
 
+void user_process (void)
+{
+	while (1) {
+		kprintf("This is a user process!.\n");
+		sleep(2000);
+	}
+	return;
+}
+
+void kernel_process (void)
+{
+	while (1) {
+		kprintf("This is a kernel process!.\n");
+		sleep(2000);
+	}
+	return;
+}
 void console (void)
 {
 	while(1) {
@@ -27,10 +46,20 @@ void console (void)
 		int option = cmd_option(str);
 		switch (option) {
 		case (0):
+			kprintf("Available commands:\n");
+			kprintf("help: prints this message.\n");
+			kprintf("intr: demo is a WIP.\n");
+			kprintf("proc: displays context switching capability.\n");
+			kprintf("halt: halts.\n");
 			break;
 		case (1):
 			break;
 		case (2):
+			kprintf("Launching user process..\n");
+			timer_set(1000000);
+			create_kernel_thread(user_process, "USER", 4);
+			kprintf("Launching kernel process..\n");
+			kernel_process();
 			break;
 		case (9):
 			kprintf("Goodbye!\n");
