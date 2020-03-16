@@ -1,11 +1,12 @@
-# ARMadillo
+![ARMadillo logo](docs/logo.png)
 
 ![status: work in progress](https://img.shields.io/badge/status-work%20in%20progress-orange)
 ![build: passing](https://img.shields.io/badge/build-passing-green)
 
+ARMadillo
 A minimal ARM OS for the Raspberry Pi Zero.
 
-### Features
+## Features
 
 Currently, it:
 
@@ -14,9 +15,9 @@ Currently, it:
 * Utilizes some peripherals (ARM Timer, 64-bit Timer, LED light)
 * Supports IRQ interrupts
 * Manages the memory
+* Performs context switches
 
-
-### Essential Reading
+## Essential Reading
 
 [ARM Architecture Reference Manual, ARMv7-A and ARMv7-R edition](https://static.docs.arm.com/ddi0406/c/DDI0406C_C_arm_architecture_reference_manual.pdf)
 
