@@ -1,9 +1,10 @@
-![ARMadillo logo](docs/logo.png)
+![ARMadillo logo](logo.png)
+
+##
 
 ![status: work in progress](https://img.shields.io/badge/status-work%20in%20progress-orange)
 ![build: passing](https://img.shields.io/badge/build-passing-green)
 
-ARMadillo
 A minimal ARM OS for the Raspberry Pi Zero.
 
 ## Features
