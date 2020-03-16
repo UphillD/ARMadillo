@@ -14,9 +14,10 @@ Currently, it:
 * Boots
 * Communicates using the serial port UART0
 * Utilizes some peripherals (ARM Timer, 64-bit Timer, LED light)
-* Supports IRQ interrupts
+* Implements IRQ interrupts
 * Manages the memory
 * Performs context switches
+* Utilizes spinlocks and mutex
 
 ## Essential Reading
 

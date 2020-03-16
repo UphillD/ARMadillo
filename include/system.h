@@ -9,8 +9,11 @@ void kprintf (const char *, ...);
 
 void _halt (void);
 
-/* include the assembly functions from asm.c. */
+/* include the assembly functions from asm.S. */
 uint32_t GET32 (uint32_t);
 void PUT32 (uint32_t, uint32_t);
+
+/* include the try_lock function from lock.S. */
+int try_lock (int *);
 
 #endif
