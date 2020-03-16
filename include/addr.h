@@ -59,7 +59,8 @@ enum {
 };
 
 enum {
-	SYSTIMERCLO	= 0x20003004,
+	SYSTEM_TIMER_BASE	= 0x20003000,
+	SYSTEM_TIMER_CLOCK	= 0x20003004,
 };
 
 #endif

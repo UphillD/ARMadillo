@@ -36,7 +36,7 @@ void led_pulse (void)
 }
 
 /* Produces a single heartbeat pulse on the LED. */
-void heartbeat (void)
+void led_heartbeat (void)
 {
 	PUT32(GPCLR1, 1 << (47 - 32));
 	sleep(150);

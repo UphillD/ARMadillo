@@ -1,4 +1,4 @@
-ARCH	= armv6
+ARCH	= armv6zk
 CPU 	= arm1176jzf-s
 
 ARMGNU	= arm-none-eabi
@@ -8,9 +8,9 @@ LD	= $(ARMGNU)-ld
 OBJCOPY	= $(ARMGNU)-objcopy
 OBJDUMP	= $(ARMGNU)-objdump
 
-ASFLAGS = -mcpu=$(CPU) -mfpu=vfp		 		\
+ASFLAGS = -mcpu=$(CPU) -mfpu=vfp -march=$(ARCH) 	 	\
 	-g -Wall -Werror -Wextra
-CFLAGS	= -mcpu=$(CPU) -mfpu=vfp -mtune=$(CPU)			\
+CFLAGS	= -mcpu=$(CPU) -mfpu=vfp -march=$(ARCH) -mtune=$(CPU)	\
 	-g -Wall -Werror -Wextra -O2 -fpic			\
 	-nostdlib -nostartfiles -ffreestanding 			\
 	-mhard-float -I ../include
