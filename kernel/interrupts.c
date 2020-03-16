@@ -8,6 +8,7 @@
 #include "common/types.h"
 #include "common/lib.h"
 #include "drivers/uart.h"
+#include "addr.h"
 #include "interrupts.h"
 
 static interrupt_registers_t * interrupt_regs;
@@ -18,10 +19,44 @@ static interrupt_clearer_f clearers[NUM_IRQS];
 extern void move_exception_vector(void);
 extern uint32_t exception_vector;
 
+bool IRQ_IS_BASIC (uint32_t irq_num)
+{
+	if (irq_num >= 64)
+		return true;
+	else
+		return false;
+}
+
+bool IRQ_IS_GPU2 (uint32_t irq_num)
+{
+	if ((irq_num >= 32) && (irq_num < 64))
+		return true;
+	else
+		return false;
+}
+
+bool IRQ_IS_GPU1 (uint32_t irq_num)
+{
+	if (irq_num < 32)
+		return true;
+	else
+		return false;
+}
+
+bool IRQ_IS_PENDING (interrupt_registers_t * interrupt_regs, int irq_num)
+{
+	if ((IRQ_IS_BASIC(irq_num) && ((1 << (irq_num - 64)) & interrupt_regs->irq_basic_pending))	\
+		|| (IRQ_IS_GPU2(irq_num) && ((1 << (irq_num - 32)) & interrupt_regs->irq_gpu_pending2))	\
+		|| (IRQ_IS_GPU1(irq_num) && ((1 << (irq_num)) & interrupt_regs->irq_gpu_pending1)))
+		return true;
+	else
+		return false;
+}
+
 /* Initialize the interrupts. */
 void interrupts_init (void)
 {
-	interrupt_regs = (interrupt_registers_t *) INTERRUPTS_PENDING;
+	interrupt_regs = (interrupt_registers_t *) IRQ_BASIC;
 	bzero(handlers, sizeof(interrupt_handler_f) * NUM_IRQS);
 	bzero(clearers, sizeof(interrupt_clearer_f) * NUM_IRQS);
 	/* Disable all interrupts. */

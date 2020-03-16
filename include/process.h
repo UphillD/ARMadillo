@@ -1,9 +1,7 @@
 #include "common/list.h"
-#include <stddef.h>
 
 #ifndef PROCESS_H
 #define PROCESS_H
-
 
 typedef void (*kthread_function_f)(void);
 
@@ -25,14 +23,18 @@ typedef struct {
 	uint32_t lr;
 } proc_saved_state_t;
 
+/* Creates list for the PCBs. */
 DEFINE_LIST(pcb);
 
+/* Creates a struct for each PCB. */
 typedef struct pcb {
-	proc_saved_state_t * saved_state; // Pointer to where on the stack this process's state is saved. Becomes invalid once the process is running
-	void * stack_page;                // The stack for this proces.  The stack starts at the end of this page
-	uint32_t pid;                     // The process ID number
-	DEFINE_LINK(pcb);
-	char proc_name[20];               // The process's name
+	proc_saved_state_t * saved_state;	/* Points to the pushed registers of the process in the stack. */
+						/* Becomes invalid once the process is running. */
+	void * stack_page;			/* The stack for this process. */
+						/* The stack starts at the end of this page. */
+	uint32_t pid;				/* The process' ID number. */
+	DEFINE_LINK(pcb);			/* Link the PCB struct in the PCB list. */
+	char proc_name[20];			/* The process' name. */
 } process_control_block_t;
 
 void process_init(void);

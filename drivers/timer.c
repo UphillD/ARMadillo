@@ -41,11 +41,11 @@ static void timer_irq_clearer (void)
 	timer_regs->control.timer1_matched = 1;
 }
 
-/* The Scheduler handler. */
+/* The Scheduler handler.
 static void scheduler_handler (void)
 {
 	schedule();
-}
+} */
 
 /* The Scheduler clearer. */
 static void scheduler_clearer (void)
@@ -64,7 +64,7 @@ void timer_init (void)
 void scheduler_init (void)
 {
 	timer_regs = (timer_registers_t *) SYSTEM_TIMER_BASE;
-	register_irq_handler(SYSTEM_TIMER_1, scheduler_handler, scheduler_clearer);
+	register_irq_handler(SYSTEM_TIMER_1, schedule, scheduler_clearer);
 }
 
 /* Sets the timer. */
