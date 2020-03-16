@@ -1,8 +1,11 @@
 #!/bin/bash
 
+# Helper script for moving the kernel image to the SD Card.
+# The juggle remains!
+
 # Unmount the SD Card if it was automatically mounted
-umount /dev/mmcblk0p1
-umount /dev/mmcblk0p2
+umount /dev/mmcblk0p1 &> /dev/null
+umount /dev/mmcblk0p2 &> /dev/null
 
 # Create directory /mount/raspberry
 mkdir -p /mount/raspberry

@@ -33,7 +33,7 @@ void schedule (void)
 
 	// If nothing on the run queue, the current process should just continue
 	if (size_pcb_list(&run_queue) == 0) {
-		timer_set(10000);
+		scheduler(10000);
 		ENABLE_INTERRUPTS();
 		return;
 	}
@@ -69,7 +69,7 @@ void process_init (void)
 	current_process = main_pcb;
 
 	// Set the timer to go off after 10 ms
-	timer_set(10000);
+	scheduler(10000);
 }
 
 static void reap (void)

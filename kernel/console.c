@@ -48,15 +48,20 @@ void console (void)
 		case (0):
 			kprintf("Available commands:\n");
 			kprintf("help: prints this message.\n");
-			kprintf("intr: demo is a WIP.\n");
+			kprintf("intr: sparks a repeatable interrupt.\n");
 			kprintf("proc: displays context switching capability.\n");
 			kprintf("halt: halts.\n");
 			break;
 		case (1):
+			kprintf("Setting interrupt..\n");
+			kprintf("You should see the LED pulsing.\n");
+			timer_init();
+			timer_set(500000);
 			break;
 		case (2):
 			kprintf("Launching user process..\n");
-			timer_set(1000000);
+			scheduler_init();
+			scheduler(1000000);
 			create_kernel_thread(user_process, "USER", 4);
 			kprintf("Launching kernel process..\n");
 			kernel_process();

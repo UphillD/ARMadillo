@@ -12,9 +12,8 @@
 void bzero (void * dest, int bytes)
 {
 	char * d = dest;
-	while (bytes--) {
+	while (bytes--)
 		*d++ = 0;
-	}
 }
 
 /* Returns the minimum of two numbers. */
@@ -77,7 +76,8 @@ char * itoa (int i)
 /* Turns string into integer. */
 int atoi (char * str)
 {
-	int res = 0, power = 0, digit, i;
+	int res = 0, power = 0;
+	int digit, i;
 	char * start = str;
 
 	/* Find the end of the number. */

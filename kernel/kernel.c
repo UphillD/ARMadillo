@@ -17,7 +17,7 @@ int kernel_main (uint32_t r0, uint32_t r1, uint32_t atags)
 
 	init_all(atags);
 
-	timer_init();
+	//timer_init();
 
 	kprintf ("Greetings!\n");
 	kprintf ("Welcome to the kernel! \n");

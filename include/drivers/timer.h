@@ -8,11 +8,13 @@
 
 #define SYSTEM_TIMER_BASE (SYSTEM_TIMER_OFFSET + PERIPHERAL_BASE)
 
+void timer_set(uint32_t);
 void timer_init(void);
 
-void timer_set(uint32_t usecs);
+void scheduler (uint32_t);
+void scheduler_init (void);
 
-void udelay(uint32_t usecs);
+void udelay(uint32_t);
 
 typedef struct {
     uint8_t timer0_matched: 1;
