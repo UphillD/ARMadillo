@@ -9,9 +9,9 @@
 #include "drivers/uart.h"
 #include "drivers/timer.h"
 #include "addr.h"
-#include "asm.h"
 #include "interrupts.h"
 #include "process.h"
+#include "system.h"
 
 /* Sleeps for msec millisecond */
 /* utilizes the 64-bit free running timer */

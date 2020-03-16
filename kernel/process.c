@@ -6,6 +6,7 @@
  */
 
 #include "common/lib.h"
+#include "common/string.h"
 #include "drivers/timer.h"
 #include "interrupts.h"
 #include "mem.h"

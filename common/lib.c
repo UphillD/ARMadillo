@@ -8,14 +8,6 @@
 #include "common/lib.h"
 #include "common/types.h"
 
-void memcpy(void * dest, const void * src, int bytes) {
-    char * d = dest;
-    const char * s = src;
-    while (bytes--) {
-        *d++ = *s++;
-    }
-}
-
 /* Zeroes out bytes starting at dest. */
 void bzero (void * dest, int bytes)
 {

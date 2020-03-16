@@ -1,14 +1,22 @@
 /*
  * ARMadillo/kernel/console.c
  *
- * Provides a serial console over UART0 for I/O
+ * Provides a serial console over UART0 for demo purposes
  *
  */
 
-#include "asm.h"
-#include "interrupts.h"
 #include "common/string.h"
 #include "drivers/uart.h"
+#include "system.h"
+
+static int cmd_option (char * str)
+{
+	if (!strcmp(str, "help")) return 0;
+	else if (!strcmp(str, "intr")) return 1;
+	else if (!strcmp(str, "proc")) return 2;
+	else if (!strcmp(str, "halt")) return 9;
+	else return -1;
+}
 
 void console (void)
 {
@@ -16,18 +24,21 @@ void console (void)
 		uart_printstr("$ ");
 		char *str;
 		str = uart_scanstr();
-		if (!(strcmp(str, "help"))) {
-			uart_printstr("Available Commands:\n");
-			//uart_printstr("intr : sparks an interrupt\n");
-			uart_printstr("halt : shuts down the machine\n");
-		} else if (!(strcmp(str, "intr"))) {
-			//c_enable_irq(1000000);
-			uart_printstr("INTR sparked!\n");
-		} else if (!(strcmp(str, "halt"))) {
+		int option = cmd_option(str);
+		switch (option) {
+		case (0):
+			break;
+		case (1):
+			break;
+		case (2):
+			break;
+		case (9):
+			kprintf("Goodbye!\n");
 			_halt();
-
-		} else {
-			uart_printstr("Command not recognized!\n");
+			break;
+		case (-1):
+			kprintf("Unrecognized command!\n");
+			break;
 		}
 	}
 

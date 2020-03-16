@@ -9,8 +9,8 @@
 #include "drivers/timer.h"
 #include "drivers/uart.h"
 #include "console.h"
-#include "init.h"
 #include "process.h"
+#include "system.h"
 
 void test (void)
 {
@@ -31,8 +31,10 @@ int kernel_main (uint32_t r0, uint32_t r1, uint32_t atags)
 	timer_init();
 	timer_set(3000000);
 
-	uart_printstr("Greetings!\n");
-	uart_printstr("Welcome to the kernel!\n");
+	int start = 12;
+
+	kprintf ("Greetings!\n");
+	kprintf ("Welcome to the kernel! %d\n", start);
 
 	create_kernel_thread(test, "TEST", 4);
 

@@ -8,7 +8,7 @@
 #include "common/types.h"
 #include "drivers/uart.h"
 #include "addr.h"
-#include "asm.h"
+#include "system.h"
 
 /* Prints a raw character in raw uint32_t format to the console. */
 void uart_putc (uint32_t c)
@@ -28,13 +28,11 @@ void uart_printc (char ch)
 /* Prints a string to the console. */
 void uart_printstr (char *str)
 {
-	int i = 0;
-	while (str[i] != '\0') {
-		uart_printc(str[i]);
-		if (str[i] == '\n') {
+	while (*str != '\0') {
+		uart_printc(*str);
+		if (*str == '\n')
 			uart_printc('\r');
-		}
-		i++;
+		str++;
 	}
 	return;
 }
@@ -108,11 +106,10 @@ void uart_printhex (uint32_t hex)
 	do {
 		i -= 4;
 		out = (hex >> i) & 0xF;
-		if (out > 9) {
+		if (out > 9)
 			out += 0x37;
-		} else {
+		else
 			out += 0x30;
-		}
 		uart_putc(out);
 	} while (i != 0);
 	uart_putc(0x20);

@@ -7,6 +7,15 @@
 
 #include "common/string.h"
 
+/* Copies bytes of memory from src to dest. */
+void memcpy (void * dst, const void * src, int bytes)
+{
+	char * d = dst;
+	const char * s = src;
+	while (bytes--)
+		*d++ = *s++;
+}
+
 /* Compares two strings. */
 int strcmp (char * str1, char * str2)
 {
