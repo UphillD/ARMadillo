@@ -16,6 +16,7 @@
 #include "mem.h"
 #include "process.h"
 #include "system.h"
+#include "virtmem.h"
 
 void kprintf (const char * str, ...)
 {
@@ -78,6 +79,10 @@ void init_all (uint32_t atags)
 	/* Initialize Processes. */
 	process_init();
 	kprintf("[ OK ] Processes initialized.\n");
+
+	/* Initialize Virtual Memory. */
+	mmu_init();
+	kprintf("[ OK ] Virtual Memory initialized.\n");
 
 	kprintf("\n");
 

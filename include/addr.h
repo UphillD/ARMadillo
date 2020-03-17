@@ -1,6 +1,8 @@
 #ifndef ADDR_H
 #define ADDR_H
 
+#define MMUTABLEBASE 0x00004000
+
 /* ARM Timer */
 enum {
 	ARM_TIMER_LOD	= 0x2000B400,
