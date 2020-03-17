@@ -1,7 +1,7 @@
 #ifndef ADDR_H
 #define ADDR_H
 
-// ARM Timer
+/* ARM Timer */
 enum {
 	ARM_TIMER_LOD	= 0x2000B400,
 	ARM_TIMER_VAL	= 0x2000B404,
@@ -14,7 +14,7 @@ enum {
 	ARM_TIMER_CNT	= 0x2000B420,
 };
 
-// Interrupts
+/* Interrupts */
 enum {
 	IRQ_BASIC	  = 0x2000B200,
 	IRQ_PEND1	  = 0x2000B204,
@@ -24,9 +24,9 @@ enum {
 	IRQ_DISABLE_BASIC = 0x2000B224,
 };
 
-// GPIO
+/* GPIO */
 enum {
-	// The GPIO registers base address
+	/* The GPIO registers base address. */
 	GPIO_BASE	= 0x20200000,
 	GPFSEL1		= 0x20200004,
 	GPSET0		= 0x2020001C,
@@ -35,13 +35,13 @@ enum {
 	GPFSEL4		= 0x20200010,
 	GPSET1		= 0x20200020,
 	GPCLR1		= 0x2020002C,
-	// Controls actuation of pull up/down to all GPIO pins
+	/* Controls actuation of pull up/down to all GPIO pins. */
 	GPPUD		= 0x20200094,
-	// Controls actuation of pull up/down to specific GPIO pin
+	/* Controls actuation of pull up/down to specific GPIO pin. */
 	GPPUDCLK0	= 0x20200098,
 };
 
-// AUX (UART0)
+/* AUX (UART0) */
 enum {
 	AUX_BASE	= 0x20215000,
 	AUX_ENABLES     = 0x20215004,
@@ -58,6 +58,7 @@ enum {
 	AUX_MU_BAUD_REG = 0x20215068,
 };
 
+/* SYSTEM TIMER */
 enum {
 	SYSTEM_TIMER_BASE	= 0x20003000,
 	SYSTEM_TIMER_CLOCK	= 0x20003004,

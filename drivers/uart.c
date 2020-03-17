@@ -15,14 +15,12 @@ void uart_putc (uint32_t c)
 {
 	while (!(GET32(AUX_MU_LSR_REG) & 0x20));
 	PUT32(AUX_MU_IO_REG, c);
-	return;
 }
 
 /* Prints a character to the console. */
 void uart_printc (char ch)
 {
 	uart_putc((uint32_t)(ch));
-	return;
 }
 
 /* Prints a string to the console. */
@@ -34,7 +32,6 @@ void uart_printstr (char *str)
 			uart_printc('\r');
 		str++;
 	}
-	return;
 }
 
 /* Gets a character in raw uint32_t format from the console. */
@@ -51,24 +48,20 @@ char uart_scanc (void)
 }
 
 /* Gets a string from the console. */
-/* !! Needs work !! */
 char * uart_scanstr (void)
 {
-	static char str[256];
-	char tmp;
-	uint32_t i;
+	static char str[32];
+	int i;
 
-	for (i = 0; i < 256; i++) {
-		tmp = uart_scanc();
-		if (tmp != '\r' && tmp != '\n') {
-			uart_printc(tmp);
-			str[i] = tmp;
-		} else {
-			uart_printc('\r');
+	for (i = 0; i < 32; i++) {
+		str[i] = uart_scanc();
+		uart_printc(str[i]);
+		if (str[i] == '\r' || str[i] == '\n') {
 			str[i] = '\0';
 			break;
 		}
 	}
+
 	return str;
 }
 

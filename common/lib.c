@@ -6,10 +6,12 @@
  */
 
 #include "common/lib.h"
+#include "common/string.h"
 #include "common/types.h"
 
 /* Returns the minimum of two numbers. */
-int min (int int1, int int2) {
+int min (const int int1, const int int2)
+{
 	if (int1 < int2)
 		return int1;
 	else
@@ -17,7 +19,8 @@ int min (int int1, int int2) {
 }
 
 /* Returns the maximum of two numbers. */
-int max (int int1, int int2) {
+int max (const int int1, const int int2)
+{
 	if (int1 < int2)
 		return int2;
 	else
@@ -25,73 +28,44 @@ int max (int int1, int int2) {
 }
 
 /* Turns integer into string. */
-char * itoa (int i)
+char * itoa (int n)
 {
-	static char intbuf[12];
-	int j = 0;
-	int isneg = 0;
+	static char str[12];
+	int i = 0;
 
-	if (i == 0) {
-		intbuf[0] = '0';
-		intbuf[1] = '\0';
-		return intbuf;
-	}
+	bool neg = (n < 0);
 
-	if (i < 0) {
-		isneg = 1;
-		i = -i;
-	}
+	do {
+		str[i++] = n % 10 + '0';
+	} while ((n /= 10) > 0);
 
-	while (i != 0) {
-		intbuf[j++] = '0' + (i % 10);
-		i /= 10;
-	}
+	if (neg)
+		str[i++] = '-';
 
-	if (isneg) {
-		intbuf[j++] = '-';
-	}
+	str[i] = '\0';
+	strrev(str);
 
-	intbuf[j] = '\0';
-	j--;
-	i = 0;
-	while (i < j) {
-		isneg = intbuf[i];
-		intbuf[i] = intbuf[j];
-		intbuf[j] = isneg;
-		i++;
-		j--;
-	}
-
-	return intbuf;
+	return str;
 }
 
 /* Turns string into integer. */
-int atoi (char * str)
+int atoi (const char * str)
 {
-	int res = 0, power = 0;
-	int digit, i;
-	char * start = str;
+	int n = 0;
+	int i = 0;
 
-	/* Find the end of the number. */
-	while (*str >= '0' && *str <= '9')
-		str++;
-
-	str--;
-
-	while (str != start) {
-		digit = *str - '0';
-		for (i = 0; i < power; i++) {
-			digit *= 10;
-		}
-		res += digit;
-		power++;
-		str--;
+	while (str[i] && (str[i] >= '0' && str[i] <= '9')) {
+		n = n * 10 + (str[i] - '0');
+		i++;
 	}
 
-	return res;
+	return n;
 }
 
-uint32_t float_mul (uint32_t c, float f)
+/* Performs a multiplication between an unsigned int and a float.
+ * Utilizes the floating coprocessor. Has to be a separate function,
+ * otherwise the compiler just optimizes it away. */
+uint32_t fpu_mult (uint32_t c, float f)
 {
 	return c * f;
 }

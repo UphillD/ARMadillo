@@ -34,13 +34,13 @@ typedef struct page {
 	DEFINE_LINK(page);		/* Link the page in the page list. */
 } page_t;
 
-void mem_init(atag_t * atags);
+void mem_init(atag_t *);
 uint32_t get_mem_size(atag_t *);
 
 void * alloc_page(void);
-void free_page(void * ptr);
+void free_page(void *);
 
-void * kmalloc(uint32_t bytes);
-void kfree(void *ptr);
+void * kmalloc(uint32_t);
+void kfree(void *);
 
 #endif

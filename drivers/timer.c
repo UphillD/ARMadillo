@@ -46,7 +46,6 @@ void timer_init (void)
 {
 	timer_regs = (timer_registers_t *) SYSTEM_TIMER_BASE;
 	register_irq_handler(SYSTEM_TIMER_1, timer_irq_handler, timer_irq_clearer);
-	return;
 }
 
 /* Sets the timer. */

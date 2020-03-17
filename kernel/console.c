@@ -125,7 +125,7 @@ void console (void)
 			kprintf("y\t= 1.5\t\n");
 			float y = 1.5;
 			kprintf("x * y\t= 384\t= 0x");
-			uart_printhex (float_mul(x, y));
+			uart_printhex (fpu_mult(x, y));
 			kprintf("\n");
 			break;
 		case (9):

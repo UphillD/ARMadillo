@@ -6,7 +6,6 @@
  */
 
 #include "common/types.h"
-#include "drivers/timer.h"
 #include "console.h"
 #include "system.h"
 

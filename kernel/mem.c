@@ -5,8 +5,6 @@
  *
  */
 
-#include <stddef.h>
-
 #include "mem.h"
 #include "atag.h"
 #include "common/lib.h"
@@ -17,15 +15,11 @@
  * Heap Related
  */
 
-/* Initializes the heap. */
+/* Initializes the heap. Definition below */
 static void heap_init(uint32_t heap_start);
-/**
- * impliment kmalloc as a linked list of allocated segments.
- * Segments should be 4 byte aligned.
- * Use best fit algorithm to find an allocation
- */
+
  /* Struct for each heap segment. */
-typedef struct heap_segment{
+typedef struct heap_segment {
 	struct heap_segment * next;
 	struct heap_segment * prev;
 	uint32_t is_allocated;		/* This segment is allocated. */
@@ -146,10 +140,12 @@ static void heap_init(uint32_t heap_start) {
 	heap_segment_list_head->segment_size = KERNEL_HEAP_SIZE;
 }
 
+/* Implement kmalloc as a linked list of allocated segments.
+ * Uses best fit algorithm, segments are 4B aligned. */
 void * kmalloc(uint32_t bytes)
 {
 	heap_segment_t * curr, *best = NULL;
-	int diff, best_diff = 0x7fffffff; // Max signed int
+	int diff, best_diff = 0x7fffffff;
 
 	/* Add the header to the number of bytes we need and make the size 16 byte aligned. */
 	bytes += sizeof(heap_segment_t);

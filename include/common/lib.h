@@ -3,12 +3,12 @@
 
 #include "common/types.h"
 
-int min (int, int);
-int max (int, int);
+int min (const int, const int);
+int max (const int, const int);
 
 char * itoa (int);
-int atoi (char *);
+int atoi (const char *);
 
-uint32_t float_mul (uint32_t, float);
+uint32_t fpu_mult (uint32_t, float);
 
 #endif
