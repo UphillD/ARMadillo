@@ -33,3 +33,28 @@ int strcmp (char * str1, char * str2)
 
 	return (str1[i] - str2[i]);
 }
+
+/* Returns the length of a string. */
+size_t strlen (const char * str)
+{
+	const char *ch;
+	ch = str;
+	while (*ch)
+		ch++;
+	return (ch - str);
+}
+
+/* Reverses a string (in place). */
+void strrev (char *str)
+{
+	char *rev;
+	char tmp;
+	rev = str + strlen(str) - 1;
+	while (str < rev) {
+		tmp = *str;
+		*str = *rev;
+		*rev = tmp;
+		str++;
+		rev--;
+	}
+}

@@ -1,4 +1,4 @@
-ARCH	= armv6zk
+ARCH	= armv6zk+fp
 CPU 	= arm1176jzf-s
 
 ARMGNU	= arm-none-eabi
