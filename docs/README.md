@@ -15,8 +15,9 @@ Currently, it:
 * Communicates using the serial port UART0
 * Utilizes some peripherals (ARM Timer, 64-bit Timer, LED light)
 * Utilizes the floating point coprocessor
-* Implements IRQ interrupts
+* Serves IRQ interrupts
 * Manages the memory
+* Implements Virtual Memory
 * Performs context switches
 * Utilizes spinlocks and mutex
 
