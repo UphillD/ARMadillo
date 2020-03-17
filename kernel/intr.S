@@ -57,3 +57,14 @@ irq_handler_asm_wrapper:
 	rfeia   sp!			@ Load the saved return address and program
 					@ state register from before the interrupt
 					@ from the stack and return
+
+@ Data abort interrupt handler
+data_abort_handler:
+
+	mov	r6, lr
+	ldr	r8, [r6, #-8]
+	mrc	p15, 0, r4, c5, c0, 0	@ Data / Combined
+	mrc	p15, 0, r5, c5, c0, 1	@ Instructions
+	mov	sp, #0x00004000
+
+	b _halt

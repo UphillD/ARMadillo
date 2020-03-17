@@ -82,11 +82,6 @@ void __attribute__ ((interrupt ("ABORT"))) prefetch_abort_handler (void)
 	kprintf("PREFETCH ABORT HANDLER\n");
 	while(1);
 }
-void __attribute__ ((interrupt ("ABORT"))) data_abort_handler (void)
-{
-	kprintf("DATA ABORT HANDLER\n");
-	while(1);
-}
 void __attribute__ ((interrupt ("UNDEF"))) undefined_instruction_handler (void)
 {
 	kprintf("UNDEFINED INSTRUCTION HANDLER\n");
