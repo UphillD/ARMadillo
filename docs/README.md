@@ -1,4 +1,4 @@
-![ARMadillo logo](logo.png)
+![ARMadillo](logo.png)
 
 ##
 
@@ -6,20 +6,21 @@
 ![build: passing](https://img.shields.io/badge/build-passing-green)
 
 A minimal ARM OS for the Raspberry Pi Zero.
+This is my personal bonus project for the course "Embedded System Design" [ECE1258].
 
 ## Features
 
 Currently, it:
 
-* Boots
-* Communicates using the serial port UART0
-* Utilizes some peripherals (ARM Timer, 64-bit Timer, LED light)
-* Utilizes the floating point coprocessor
-* Serves IRQ interrupts
-* Manages the memory
-* Implements Virtual Memory
-* Performs context switches
-* Utilizes spinlocks and mutex
+* Boots,
+* Communicates using the serial port UART0,
+* Utilizes peripherals (ARM/64-bit Timer, LED),
+* Utilizes the floating point coprocessor,
+* Serves IRQ interrupts,
+* Manages the memory,
+* Implements Virtual Memory,
+* Performs context switches,
+* Utilizes spinlocks and mutex.
 
 ## Requirements
 
@@ -30,10 +31,19 @@ Currently, it:
 
 ## Installation
 
+#### Manual
+
 1. Clone the repository
 2. `cd build`
 3. `make`
 4. Copy the resulting `kernel.img` to the first partition of your SD Card
+
+#### Automatic
+
+1. Clone the repository.
+2. Plug your SD Card in.
+3. `cd scripts`
+4. `./makerLoader.sh`
 
 ## Essential Reading
 
