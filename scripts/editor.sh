@@ -4,11 +4,11 @@
 
 EDITOR=geany
 
-$EDITOR ./* &
+$EDITOR ./*.sh &
 $EDITOR ../build/* &
-$EDITOR ../include/* &
-$EDITOR ../include/common/* &
-$EDITOR ../include/drivers/* &
+$EDITOR ../include/*.h &
+$EDITOR ../include/common/*.h &
+$EDITOR ../include/drivers/*.h &
 $EDITOR ../common/* &
 $EDITOR ../drivers/* &
 $EDITOR ../kernel/* &

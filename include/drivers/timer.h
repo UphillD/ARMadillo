@@ -5,8 +5,8 @@
 
 void sleep (uint32_t);
 
-void timer_set(uint32_t);
-void timer_init(void);
+void timer_set (uint32_t);
+void timer_init (void);
 
 void scheduler (uint32_t);
 void scheduler_init (void);

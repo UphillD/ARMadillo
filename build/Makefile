@@ -9,7 +9,7 @@ LD	= $(ARMGNU)-ld
 OBJCOPY	= $(ARMGNU)-objcopy
 OBJDUMP	= $(ARMGNU)-objdump
 
-# Setup the compiler flags.
+# Set the compiler flags.
 ASFLAGS = -mcpu=$(CPU) -mfpu=vfp -march=$(ARCH) 	 	\
 	-g -Wall -Werror -Wextra
 CFLAGS	= -mcpu=$(CPU) -mfpu=vfp -march=$(ARCH) -mtune=$(CPU)	\
@@ -17,12 +17,12 @@ CFLAGS	= -mcpu=$(CPU) -mfpu=vfp -march=$(ARCH) -mtune=$(CPU)	\
 	-nostdlib -nostartfiles -ffreestanding 			\
 	-mhard-float -I ../include
 
-# Set the workspace directories.
+# Define the workspace directories.
 COMMON_DIR = ../common
 DRIVER_DIR = ../drivers
 KERNEL_DIR = ../kernel
 
-# Build the source lists.
+# Create the source lists.
 COM_GCC = $(wildcard $(COMMON_DIR)/*.c)
 DRI_ASM = $(wildcard $(DRIVER_DIR)/*.S)
 DRI_GCC = $(wildcard $(DRIVER_DIR)/*.c)

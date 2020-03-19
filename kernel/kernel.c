@@ -1,7 +1,7 @@
 /*
  * ARMadillo/kernel/kernel.c
  *
- * Main kernel function
+ * Main kernel function.
  *
  */
 

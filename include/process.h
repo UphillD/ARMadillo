@@ -1,7 +1,7 @@
-#include "common/list.h"
-
 #ifndef PROCESS_H
 #define PROCESS_H
+
+#include "common/list.h"
 
 typedef void (*kthread_function_f)(void);
 
@@ -37,9 +37,9 @@ typedef struct pcb {
 	char proc_name[20];			/* The process' name. */
 } process_control_block_t;
 
-void process_init(void);
+void process_init (void);
 
-void create_kernel_thread(kthread_function_f, char *, int);
-void schedule(void);
+void create_kernel_thread (kthread_function_f, char *, int);
+void schedule (void);
 
 #endif

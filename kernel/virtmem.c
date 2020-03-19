@@ -11,7 +11,7 @@
 #include "system.h"
 
 /* Links the virtual address vadd with the physical address padd using flags. */
-void mmu_section (uint32_t vadd, uint32_t padd, uint32_t flags)
+static void mmu_section (uint32_t vadd, uint32_t padd, uint32_t flags)
 {
 	uint32_t rx, ry, rz;
 

@@ -40,7 +40,7 @@ typedef enum {
 	ARM_TIMER = 64
 } irq_number_t;
 
-/* struct for the IRQ peripheral. */
+/* Struct for the IRQ peripheral. */
 typedef struct {
 	uint32_t irq_basic_pending;
 	uint32_t irq_gpu_pending1;
@@ -54,9 +54,9 @@ typedef struct {
 	uint32_t irq_basic_disable;
 } interrupt_registers_t;
 
-void interrupts_init(void);
+void interrupts_init (void);
 
-void register_irq_handler(irq_number_t, interrupt_handler_f, interrupt_clearer_f);
-void unregister_irq_handler(irq_number_t);
+void register_irq_handler (irq_number_t, interrupt_handler_f, interrupt_clearer_f);
+void unregister_irq_handler (irq_number_t);
 
 #endif

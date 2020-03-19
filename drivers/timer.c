@@ -14,7 +14,7 @@
 #include "system.h"
 
 /* Sleeps for msec millisecond */
-/* utilizes the 64-bit free running timer */
+/* Utilizes the 64-bit free running timer */
 void sleep (uint32_t msec)
 {
 	uint32_t wakeTime = GET32(SYSTEM_TIMER_CLOCK) + msec * 977;

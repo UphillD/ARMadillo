@@ -15,4 +15,4 @@ fpu_init:
 	mcr	p15, 0, r0, c1, c0, 2
 	mov	r0, #0x40000000
 	fmxr	fpexc, r0
-	bx lr
+	bx	lr

@@ -5,6 +5,7 @@
 
 void mmu_init (void);
 
+/* drivers/mmu.S */
 void mmu_start (uint32_t, uint32_t);
 void mmu_stop (void);
 
