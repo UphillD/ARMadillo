@@ -6,6 +6,7 @@
 ![build: passing](https://img.shields.io/badge/build-passing-green)
 
 A minimal ARM OS for the Raspberry Pi Zero.
+
 This is my personal bonus project for the course "Embedded System Design" [ECE1258].
 
 ## Features
@@ -24,19 +25,19 @@ Currently, it:
 
 ## Requirements
 
-1. A Raspberry Pi Zero (stock, W or WH model).
-2. A USB-to-TTL Serial Cable
-3. A properly formatted SD Card
-4. A Serial Console (dterm, minicom, screen)
+1. A Raspberry Pi Zero (stock, W or WH model),
+2. A USB-to-TTL Serial Cable,
+3. A properly formatted SD Card,
+4. A Serial Console (dterm, minicom, screen).
 
 ## Installation
 
 #### Manual
 
-1. Clone the repository
+1. Clone the repository.
 2. `cd build`
 3. `make`
-4. Copy the resulting `kernel.img` to the first partition of your SD Card
+4. Copy the resulting `kernel.img` to the first partition of your SD Card.
 
 #### Automatic
 
@@ -45,7 +46,7 @@ Currently, it:
 3. `cd scripts`
 4. `./makerLoader.sh`
 
-## Essential Reading
+## References
 
 [ARM Architecture Reference Manual, ARMv7-A and ARMv7-R edition](https://static.docs.arm.com/ddi0406/c/DDI0406C_C_arm_architecture_reference_manual.pdf)
 
