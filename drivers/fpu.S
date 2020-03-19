@@ -1,5 +1,5 @@
 /*
- * ARMadillo/kernel/fpu.S
+ * ARMadillo/drivers/fpu.S
  *
  * Initializes the floating point coprocessor.
  *

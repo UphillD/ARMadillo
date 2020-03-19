@@ -182,6 +182,7 @@ void * kmalloc(uint32_t bytes)
 	return best + 1;
 }
 
+/* Frees memory. */
 void kfree (void *ptr)
 {
 	heap_segment_t * seg;

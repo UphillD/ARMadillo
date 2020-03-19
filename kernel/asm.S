@@ -1,7 +1,7 @@
 /*
  * ARMadillo/kernel/asm.S
  *
- * Provides any required miscellaneous functionality in assembly
+ * Provides data putting and getting functions.
  *
  */
 

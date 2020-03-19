@@ -56,7 +56,7 @@ typedef struct {
 
 void interrupts_init(void);
 
-void register_irq_handler(irq_number_t irq_num, interrupt_handler_f handler, interrupt_clearer_f clearer);
-void unregister_irq_handler(irq_number_t irq_num);
+void register_irq_handler(irq_number_t, interrupt_handler_f, interrupt_clearer_f);
+void unregister_irq_handler(irq_number_t);
 
 #endif

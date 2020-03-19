@@ -39,7 +39,7 @@ typedef struct pcb {
 
 void process_init(void);
 
-void create_kernel_thread(kthread_function_f thread_func, char * name, int name_len);
+void create_kernel_thread(kthread_function_f, char *, int);
 void schedule(void);
 
 #endif

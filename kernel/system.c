@@ -1,7 +1,7 @@
 /*
  * ARMadillo/kernel/system.c
  *
- * Provides some core functionality
+ * Provides some core functionality.
  *
  */
 
@@ -18,6 +18,8 @@
 #include "system.h"
 #include "virtmem.h"
 
+/* Implementation of printf. */
+/* Utilizes stdarg.h to handle variable number of arguments. */
 void kprintf (const char * str, ...)
 {
 	va_list args;

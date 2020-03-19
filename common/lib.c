@@ -1,7 +1,7 @@
 /*
  * ARMadillo/common/lib.c
  *
- * Provides any required miscellaneous functionality.
+ * Provides any required generic functionality.
  *
  */
 

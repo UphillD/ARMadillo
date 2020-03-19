@@ -8,6 +8,7 @@
 #include "common/types.h"
 #include "common/string.h"
 
+/* Sets bytes of memory to value passed in c. */
 void memset (void * dst, uint8_t c, int bytes)
 {
 	uint8_t * d = dst;
@@ -39,6 +40,7 @@ size_t strlen (const char * str)
 {
 	const char *ch;
 	ch = str;
+
 	while (*ch)
 		ch++;
 	return (ch - str);
@@ -49,6 +51,7 @@ void strrev (char *str)
 {
 	char *rev;
 	char tmp;
+
 	rev = str + strlen(str) - 1;
 	while (str < rev) {
 		tmp = *str;

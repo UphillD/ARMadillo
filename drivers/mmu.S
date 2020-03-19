@@ -1,5 +1,5 @@
 /*
- * ARMadillo/kernel/mmu.S
+ * ARMadillo/drivers/mmu.S
  *
  * Setups the MMU peripheral.
  *

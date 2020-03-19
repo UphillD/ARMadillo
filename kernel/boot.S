@@ -1,7 +1,7 @@
 /*
  * ARMadillo/kernel/boot.S
  *
- * The bootloader
+ * The bootloader.
  *
  */
 

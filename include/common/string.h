@@ -7,7 +7,7 @@ void memset (void *, uint8_t, int);
 void memcpy (void *, const void *, int);
 
 int strcmp (char *, char *);
-size_t strlen (const char * str);
-void strrev (char *str);
+size_t strlen (const char *);
+void strrev (char *);
 
 #endif

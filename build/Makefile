@@ -1,6 +1,7 @@
 ARCH	= armv6zk+fp
 CPU 	= arm1176jzf-s
 
+# Setup the toolchain.
 ARMGNU	= arm-none-eabi
 AS	= $(ARMGNU)-as
 CC	= $(ARMGNU)-gcc
@@ -8,6 +9,7 @@ LD	= $(ARMGNU)-ld
 OBJCOPY	= $(ARMGNU)-objcopy
 OBJDUMP	= $(ARMGNU)-objdump
 
+# Setup the compiler flags.
 ASFLAGS = -mcpu=$(CPU) -mfpu=vfp -march=$(ARCH) 	 	\
 	-g -Wall -Werror -Wextra
 CFLAGS	= -mcpu=$(CPU) -mfpu=vfp -march=$(ARCH) -mtune=$(CPU)	\
@@ -15,23 +17,29 @@ CFLAGS	= -mcpu=$(CPU) -mfpu=vfp -march=$(ARCH) -mtune=$(CPU)	\
 	-nostdlib -nostartfiles -ffreestanding 			\
 	-mhard-float -I ../include
 
+# Set the workspace directories.
 COMMON_DIR = ../common
 DRIVER_DIR = ../drivers
 KERNEL_DIR = ../kernel
 
-ASM_SRC = $(wildcard $(KERNEL_DIR)/*.S)
-ASM_OBJ = $(ASM_SRC:.S=.o)
-COM_SRC = $(wildcard $(COMMON_DIR)/*.c)
-COM_OBJ = $(COM_SRC:.c=.o)
-DRI_SRC = $(wildcard $(DRIVER_DIR)/*.c)
-DRI_OBJ = $(DRI_SRC:.c=.o)
-KER_SRC = $(wildcard $(KERNEL_DIR)/*.c)
-KER_OBJ = $(KER_SRC:.c=.o)
+# Build the source lists.
+COM_GCC = $(wildcard $(COMMON_DIR)/*.c)
+DRI_ASM = $(wildcard $(DRIVER_DIR)/*.S)
+DRI_GCC = $(wildcard $(DRIVER_DIR)/*.c)
+KER_ASM = $(wildcard $(KERNEL_DIR)/*.S)
+KER_GCC = $(wildcard $(KERNEL_DIR)/*.c)
+
+# Build the object list.
+OBJ = $(COM_GCC:.c=.o)
+OBJ += $(DRI_ASM:.S=.o)
+OBJ += $(DRI_GCC:.c=.o)
+OBJ += $(KER_ASM:.S=.o)
+OBJ += $(KER_GCC:.c=.o)
 
 all: kernel.img
 
-kernel.elf : linker.ld $(ASM_OBJ) $(COM_OBJ) $(DRI_OBJ) $(KER_OBJ)
-	$(LD) $(ASM_OBJ) $(COM_OBJ) $(DRI_OBJ) $(KER_OBJ) -T linker.ld -o kernel.elf
+kernel.elf : linker.ld $(OBJ)
+	$(LD) $(OBJ) -T linker.ld -o kernel.elf
 	$(OBJDUMP) -D kernel.elf > kernel.list
 
 kernel.img : kernel.elf
@@ -39,10 +47,7 @@ kernel.img : kernel.elf
 	$(OBJCOPY) kernel.elf -O binary kernel.img
 
 clean:
-	@rm -f $(ASM_OBJ)
-	@rm -f $(COM_OBJ)
-	@rm -f $(DRI_OBJ)
-	@rm -f $(KER_OBJ)
+	@rm -f $(OBJ)
 	@rm -f *.elf
 	@rm -f *.list
 	@rm -f *.srec
