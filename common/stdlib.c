@@ -5,7 +5,7 @@
  *
  */
 
-#include "common/lib.h"
+#include "common/stdlib.h"
 #include "common/string.h"
 #include "common/types.h"
 
@@ -28,12 +28,14 @@ int max (const int int1, const int int2)
 }
 
 /* Turns integer into string. */
-char * itoa (int n)
+char *itoa (int n)
 {
 	static char str[12];
 	int i = 0;
 
 	bool neg = (n < 0);
+	if (neg)
+		n = -n;
 
 	do {
 		str[i++] = n % 10 + '0';
@@ -49,15 +51,22 @@ char * itoa (int n)
 }
 
 /* Turns string into integer. */
-int atoi (const char * str)
+int atoi (const char *str)
 {
 	int n = 0;
 	int i = 0;
+
+	bool neg = (str[0] == '-');
+	if (neg)
+		i++;
 
 	while (str[i] && (str[i] >= '0' && str[i] <= '9')) {
 		n = n * 10 + (str[i] - '0');
 		i++;
 	}
+
+	if (neg)
+		n = -n;
 
 	return n;
 }

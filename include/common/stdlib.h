@@ -1,5 +1,5 @@
-#ifndef LIB_H
-#define LIB_H
+#ifndef STDLIB_H
+#define STDLIB_H
 
 #include "common/types.h"
 

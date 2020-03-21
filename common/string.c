@@ -9,40 +9,42 @@
 #include "common/string.h"
 
 /* Sets bytes of memory to value passed in c. */
-void memset (void * dst, uint8_t c, int bytes)
+void memset (void *dst, uint8_t c, int bytes)
 {
-	uint8_t * d = dst;
+	uint8_t *d = dst;
 	while (bytes--)
 		*d++ = c;
 }
 
 /* Copies bytes of memory from src to dest. */
-void memcpy (void * dst, const void * src, int bytes)
+void memcpy (void *dst, const void *src, int bytes)
 {
-	char * d = dst;
-	const char * s = src;
+	char *d = dst;
+	const char *s = src;
 	while (bytes--)
 		*d++ = *s++;
 }
 
 /* Compares two strings. */
-int strcmp (char * str1, char * str2)
+int strcmp (char *str1, char *str2)
 {
 	int i = 0;
-	while (str1[i] == str2[i] && str1[i] != '\0')
+
+	while ((str1[i] == str2[i]) && (str1[i] != '\0'))
 		i++;
 
 	return (str1[i] - str2[i]);
 }
 
 /* Returns the length of a string. */
-size_t strlen (const char * str)
+size_t strlen (const char *str)
 {
 	const char *ch;
 	ch = str;
 
 	while (*ch)
 		ch++;
+
 	return (ch - str);
 }
 
