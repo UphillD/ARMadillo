@@ -11,7 +11,7 @@
 #include "addr.h"
 #include "interrupts.h"
 #include "process.h"
-#include "system.h"
+#include "sys.h"
 
 /* Sleeps for msec millisecond */
 /* Utilizes the 64-bit free running timer */

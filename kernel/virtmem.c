@@ -8,7 +8,7 @@
 #include "common/types.h"
 #include "drivers/mmu.h"
 #include "addr.h"
-#include "system.h"
+#include "sys.h"
 #include "virtmem.h"
 
 /* Links the virtual address vadd with the physical address padd using flags. */

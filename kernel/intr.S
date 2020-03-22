@@ -67,4 +67,4 @@ data_abort_handler:
 	mrc	p15, 0, r5, c5, c0, 1	@ Instructions
 	mov	sp, #0x00004000
 
-	b	_halt
+	b	halt

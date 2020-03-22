@@ -12,6 +12,7 @@
 #include "drivers/uart.h"
 #include "mutex.h"
 #include "process.h"
+#include "sys.h"
 #include "system.h"
 
 static int cmd_option (char * str)
@@ -130,7 +131,7 @@ void console (void)
 			break;
 		case (9):
 			kprintf("Goodbye!\n");
-			_halt();
+			halt();
 			break;
 		case (-1):
 			kprintf("Unrecognized command!\n");

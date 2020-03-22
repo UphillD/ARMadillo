@@ -39,8 +39,3 @@ _start:
 	@ Move execution to kernel_main
 	bl	kernel_main
 
-@ Halt function.
-.globl _halt
-_halt:
-	wfe
-	b	_halt
