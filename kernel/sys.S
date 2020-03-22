@@ -25,5 +25,4 @@ PUT32:
 .thumb_func
 .globl halt
 halt:
-	wfe
 	b	halt

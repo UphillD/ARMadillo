@@ -7,6 +7,7 @@
 #include "common/types.h"
 #include "drivers/uart.h"
 #include "addr.h"
+#include "mem.h"
 #include "system.h"
 
 /* Prints a raw character in raw uint32_t format to the console. */
@@ -49,9 +50,10 @@ char uart_scanc (void)
 }
 
 /* Gets a string from the console. */
-char * uart_scanstr (void)
+char *uart_scanstr (void)
 {
-	static char str[32];
+	static char *str;
+	str = kmalloc (32 * sizeof(char));
 	int i;
 
 	for (i = 0; i < 32; i++) {

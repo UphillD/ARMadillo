@@ -71,8 +71,6 @@ void kernel_process (void)
 
 void console (void)
 {
-	char *str;
-	str = kmalloc (32 * sizeof(char));
 	int option;
 
 	kprintf("Greetings, and welcome to ARMadillo!\n");
@@ -80,7 +78,9 @@ void console (void)
 	kprintf("Please enter 'help' for the available commands!.\n");
 
 	while (1) {
-		uart_printstr("$ ");
+		char *str;
+
+		kprintf("$ ");
 		str = uart_scanstr();
 		kprintf("\n");
 
@@ -139,11 +139,10 @@ void console (void)
 			kprintf("Goodbye!\n");
 			halt();
 			break;
-		case (-1):
+		default:
 			kprintf("Unrecognized command!\n");
 			break;
 		}
 	}
 
-	return;
 }

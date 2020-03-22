@@ -1,6 +1,12 @@
 #ifndef ADDR_H
 #define ADDR_H
 
+/* SYSTEM Timer */
+enum {
+	SYSTEM_TIMER_BASE	= 0x20003000,
+	SYSTEM_TIMER_CLOCK	= 0x20003004,
+};
+
 /* Interrupts */
 enum {
 	IRQ_BASIC		= 0x2000B200,
@@ -59,10 +65,5 @@ enum {
 	AUX_MU_BAUD_REG	= 0x20215068,
 };
 
-/* SYSTEM TIMER */
-enum {
-	SYSTEM_TIMER_BASE	= 0x20003000,
-	SYSTEM_TIMER_CLOCK	= 0x20003004,
-};
 
 #endif

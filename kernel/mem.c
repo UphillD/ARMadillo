@@ -1,7 +1,7 @@
 /*
  * ARMadillo/kernel/mem.c
  *
- * Provides memory management functionality.
+ * Manages memory.
  */
 
 #include "common/stdlib.h"
@@ -11,24 +11,20 @@
 #include "mem.h"
 
 /*
- * Heap Related
+ * Heap
  */
 
-/* Initializes the heap. Definition below */
-static void heap_init(uint32_t heap_start);
+static heap_segment_t *heap_segment_list_head;
 
- /* Struct for each heap segment. */
-typedef struct heap_segment {
-	struct heap_segment * next;
-	struct heap_segment * prev;
-	uint32_t is_allocated;		/* This segment is allocated. */
-	uint32_t segment_size;		/* Size of this segment, includes this header. */
-} heap_segment_t;
-
-static heap_segment_t * heap_segment_list_head;
+/* Initializes the heap. */
+static void heap_init(uint32_t heap_start) {
+	heap_segment_list_head = (heap_segment_t *) heap_start;
+	memset(heap_segment_list_head, 0, sizeof(heap_segment_t));
+	heap_segment_list_head->segment_size = KERNEL_HEAP_SIZE;
+}
 
 /*
- * Memory Related
+ * Memory
  */
 
 extern uint8_t __end;
@@ -36,22 +32,27 @@ static uint32_t num_pages;
 
 IMPLEMENT_LIST(page);
 
-static page_t * all_pages_array;
+static page_t *all_pages_array;
 page_list_t free_pages;
 
 /* Gets the total memory size from the atags. */
-uint32_t get_mem_size (struct atag_t * tag) {
+uint32_t get_mem_size (struct atag_t *tag) {
 	while (tag->tag != NONE) {
 		if (tag->tag == MEM)
 			return tag->mem.size;
-	tag = (struct atag_t *)(((uint32_t *)tag) + tag->tag_size);
+		tag = (struct atag_t *)(((uint32_t *)tag) + tag->tag_size);
 	}
 	return 0;
 }
 
 /* Initializes the memory. */
-void mem_init (struct atag_t * atags) {
-	uint32_t mem_size, page_array_len, kernel_pages, page_array_end, i;
+void mem_init (struct atag_t *atags) {
+
+	uint32_t i;
+	uint32_t mem_size;
+	uint32_t page_array_len;
+	uint32_t kernel_pages;
+	uint32_t page_array_end;
 
 	/* Calculate the total number of pages. */
 	mem_size = get_mem_size(atags);
@@ -64,7 +65,8 @@ void mem_init (struct atag_t * atags) {
 	memset(all_pages_array, 0, page_array_len);
 	INITIALIZE_LIST(free_pages);
 
-	/* Find where the page metadata ends and round up to the nearest page. */
+	/* Find where the page metadata ends and round up
+	 * to the nearest page. */
 	page_array_end = (uint32_t)all_pages_array + page_array_len;
 	page_array_end += page_array_end % PAGE_SIZE ? PAGE_SIZE - (page_array_end % PAGE_SIZE) : 0;
 
@@ -76,13 +78,17 @@ void mem_init (struct atag_t * atags) {
 		all_pages_array[i].flags.allocated = 1;
 		all_pages_array[i].flags.kernel_page = 1;
 	}
+
 	/* Reserve 1 MB for the kernel heap. */
 	for (; i < kernel_pages + (KERNEL_HEAP_SIZE / PAGE_SIZE); i++) {
-		all_pages_array[i].vaddr_mapped = i * PAGE_SIZE;    /* Identity map the kernel heap pages. */
+		all_pages_array[i].vaddr_mapped = i * PAGE_SIZE;
+		/* Identity map the kernel heap pages. */
 		all_pages_array[i].flags.allocated = 1;
 		all_pages_array[i].flags.kernel_heap_page = 1;
 	}
-	/* Map the rest of the pages as unallocated, and add them to the free list. */
+
+	/* Mark the rest of the pages as unallocated,
+	 * add them to the free list. */
 	for (; i < num_pages; i++) {
 		all_pages_array[i].flags.allocated = 0;
 		append_page_list(&free_pages, &all_pages_array[i]);
@@ -94,10 +100,10 @@ void mem_init (struct atag_t * atags) {
 }
 
 /* Allocates a page. */
-void * alloc_page (void)
+void *alloc_page (void)
 {
-	page_t * page;
-	void * page_mem;
+	page_t *page;
+	void *page_mem;
 
 	/* If no free pages, return 0. */
 	if (size_page_list(&free_pages) == 0)
@@ -119,7 +125,7 @@ void * alloc_page (void)
 }
 
 /* Frees a page. */
-void free_page (void * ptr)
+void free_page (void *ptr)
 {
     page_t * page;
 
@@ -129,24 +135,19 @@ void free_page (void * ptr)
     /* Mark the page as free. */
     page->flags.allocated = 0;
     append_page_list(&free_pages, page);
-
-    return;
-}
-
-static void heap_init(uint32_t heap_start) {
-	heap_segment_list_head = (heap_segment_t *) heap_start;
-	memset(heap_segment_list_head, 0, sizeof(heap_segment_t));
-	heap_segment_list_head->segment_size = KERNEL_HEAP_SIZE;
 }
 
 /* Implement kmalloc as a linked list of allocated segments.
  * Uses best fit algorithm, segments are 4B aligned. */
-void * kmalloc(uint32_t bytes)
+void *kmalloc (uint32_t bytes)
 {
-	heap_segment_t * curr, *best = NULL;
-	int diff, best_diff = 0x7fffffff;
+	heap_segment_t *curr;
+	heap_segment_t *best = NULL;
+	int diff;
+	int best_diff = 0x7fffffff;
 
-	/* Add the header to the number of bytes we need and make the size 16 byte aligned. */
+	/* Add the header to the number of bytes we need,
+	 * make the size 16 byte aligned. */
 	bytes += sizeof(heap_segment_t);
 	bytes += bytes % 16 ? 16 - (bytes % 16) : 0;
 
@@ -163,9 +164,11 @@ void * kmalloc(uint32_t bytes)
 	if (best == NULL)
 		return NULL;
 
-	/* If the best difference we could come up with was large, split up this segment into two.
-	 * Since our segment headers are rather large, the criterion for splitting the segment is that
-	 * when split, the segment not being requested should be twice a header size. */
+	/* If the best difference we could come up with was too big,
+	 *  split up this segment into two.
+	 * Since our segment headers are rather large, the criterion for
+	 *  splitting the segment is that when split, the segment not being
+	 *  requested should be twice a header size. */
 	if (best_diff > (int)(2 * sizeof(heap_segment_t))) {
 		memset(((void*)(best)) + bytes, 0, sizeof(heap_segment_t));
 		curr = best->next;
@@ -184,7 +187,7 @@ void * kmalloc(uint32_t bytes)
 /* Frees memory. */
 void kfree (void *ptr)
 {
-	heap_segment_t * seg;
+	heap_segment_t *seg;
 
 	if (!ptr)
 		return;
@@ -194,19 +197,18 @@ void kfree (void *ptr)
 	seg->is_allocated = 0;
 
 	/* try to coalesce segments to the left. */
-	while(seg->prev != NULL && !seg->prev->is_allocated) {
+	while (seg->prev != NULL && !seg->prev->is_allocated) {
 		seg->prev->next = seg->next;
 		seg->next->prev = seg->prev;
 		seg->prev->segment_size += seg->segment_size;
 		seg = seg->prev;
 	}
 	/* try to coalesce segments to the right. */
-	while(seg->next != NULL && !seg->next->is_allocated) {
+	while (seg->next != NULL && !seg->next->is_allocated) {
 		seg->segment_size += seg->next->segment_size;
 		if (seg->next->next != NULL) {
 			seg->next->next->prev = seg;
 		}
 		seg->next = seg->next->next;
 	}
-	return;
 }

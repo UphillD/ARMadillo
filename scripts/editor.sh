@@ -6,6 +6,7 @@ EDITOR=geany
 
 $EDITOR ./*.sh &
 $EDITOR ../build/* &
+$EDITOR ../docs/README.md &
 $EDITOR ../include/*.h &
 $EDITOR ../include/common/*.h &
 $EDITOR ../include/drivers/*.h &

@@ -60,7 +60,8 @@ struct interrupt_registers_t {
 
 void interrupts_init (void);
 
-void register_irq_handler (enum irq_number_t, interrupt_handler_f, interrupt_clearer_f);
+void register_irq_handler (enum irq_number_t,	\
+	interrupt_handler_f, interrupt_clearer_f);
 void unregister_irq_handler (enum irq_number_t);
 
 #endif

@@ -25,13 +25,14 @@ IMPLEMENT_LIST(pcb);
 pcb_list_t run_queue;
 pcb_list_t all_proc_list;
 
-process_control_block_t * current_process;
+process_control_block_t *current_process;
 
 /* (Context) switch from one process to another. */
 void schedule (void)
 {
 	DISABLE_INTERRUPTS();
-	process_control_block_t * new_thread, * old_thread;
+	process_control_block_t *new_thread;
+	process_control_block_t *old_thread;
 
 	/* If the run queue is empty, just reschedule. */
 	if (size_pcb_list(&run_queue) == 0) {
@@ -56,7 +57,7 @@ void schedule (void)
 /* Initialize processes. */
 void process_init (void)
 {
-	process_control_block_t * main_pcb;
+	process_control_block_t *main_pcb;
 	INITIALIZE_LIST(run_queue);
 	INITIALIZE_LIST(all_proc_list);
 
@@ -79,7 +80,8 @@ void process_init (void)
 static void reap (void)
 {
 	DISABLE_INTERRUPTS();
-	process_control_block_t * new_thread, * old_thread;
+	process_control_block_t *new_thread;
+	process_control_block_t *old_thread;
 
 	/* Wait for something to appear in the run queue. */
 	while (size_pcb_list(&run_queue) == 0);
@@ -104,8 +106,8 @@ static void reap (void)
 void create_kernel_thread (kthread_function_f thread_func,	\
 	char *name, int name_len)
 {
-	process_control_block_t * pcb;
-	struct proc_saved_state_t * new_proc_state;
+	process_control_block_t *pcb;
+	struct proc_saved_state_t *new_proc_state;
 
 	/* Allocate and initialize the PCB. */
 	pcb = kmalloc(sizeof(process_control_block_t));
@@ -115,7 +117,8 @@ void create_kernel_thread (kthread_function_f thread_func,	\
 	pcb->proc_name[min(name_len,19)] = 0;
 
 	/* Get the location the stack pointer should be at when this is run. */
-	new_proc_state = pcb->stack_page + PAGE_SIZE - sizeof(struct proc_saved_state_t);
+	new_proc_state = pcb->stack_page + PAGE_SIZE -		\
+		sizeof(struct proc_saved_state_t);
 	pcb->saved_state = new_proc_state;
 
 	/* Set up the stack that will be restored during a context switch. */
@@ -139,18 +142,18 @@ void create_kernel_thread (kthread_function_f thread_func,	\
  * Spinlocks
  */
 
-void spinlock_init (spinlock_t * lock)
+void spinlock_init (spinlock_t *lock)
 {
 	*lock = 1;
 }
 
-void spinlock_lock (spinlock_t * lock)
+void spinlock_lock (spinlock_t *lock)
 {
 	while (!lock_try(lock))
 		;
 }
 
-void spinlock_unlock (spinlock_t * lock)
+void spinlock_unlock (spinlock_t *lock)
 {
 	*lock = 1;
 }
@@ -159,26 +162,30 @@ void spinlock_unlock (spinlock_t * lock)
  * Mutex
  */
 
-void mutex_init (struct mutex_t * lock)
+void mutex_init (struct mutex_t *lock)
 {
 	lock->lock = 1;
 	lock->locker = 0;
 	INITIALIZE_LIST(lock->wait_queue);
 }
 
-void mutex_lock (struct mutex_t * lock)
+void mutex_lock (struct mutex_t *lock)
 {
-	process_control_block_t * new_thread, * old_thread;
+	process_control_block_t *new_thread;
+	process_control_block_t *old_thread;
+
 	/* If you don't get the lock, take self off run queue
 	 * and put on to mutex wait queue. */
 	while (!lock_try(&lock->lock)) {
+
 		/* Get the next thread to run using round robin. */
 		DISABLE_INTERRUPTS();
 		new_thread = pop_pcb_list(&run_queue);
 		old_thread = current_process;
 		current_process = new_thread;
 
-		/* Put the current thread back of this mutex's wait queue, not on the run queue. */
+		/* Put the current thread back of this mutex's wait queue,
+		 *  not on the run queue. */
 		append_pcb_list(&lock->wait_queue, old_thread);
 
 		/* Context Switch. */
@@ -188,9 +195,9 @@ void mutex_lock (struct mutex_t * lock)
 	lock->locker = current_process;
 }
 
-void mutex_unlock (struct mutex_t * lock)
+void mutex_unlock (struct mutex_t *lock)
 {
-	process_control_block_t * thread;
+	process_control_block_t *thread;
 
 	lock->lock = 1;
 	lock->locker = 0;
