@@ -1,5 +1,5 @@
 /*
- * ARMadillo/common/lib.c
+ * ARMadillo/common/stdlib.c
  *
  * Provides any required generic functionality.
  *

@@ -7,7 +7,7 @@
 
 #include <stdarg.h>
 
-#include "common/lib.h"
+#include "common/stdlib.h"
 #include "common/types.h"
 #include "drivers/led.h"
 #include "drivers/timer.h"

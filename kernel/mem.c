@@ -5,11 +5,11 @@
  *
  */
 
-#include "mem.h"
-#include "atag.h"
-#include "common/lib.h"
+#include "common/stdlib.h"
 #include "common/string.h"
 #include "common/types.h"
+#include "atag.h"
+#include "mem.h"
 
 /*
  * Heap Related
