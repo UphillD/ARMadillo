@@ -8,7 +8,6 @@
 #include "common/string.h"
 #include "addr.h"
 #include "interrupts.h"
-#include "intr.h"
 #include "system.h"
 
 static struct interrupt_registers_t * interrupt_regs;
@@ -124,7 +123,7 @@ void register_irq_handler(enum irq_number_t irq_num, \
 }
 
 /* Unregisters the appropriate IRQ handler. */
-void unregister_irq_handler(enum irq_number_t irq_num)
+void unregister_irq_handler (enum irq_number_t irq_num)
 {
 	uint32_t irq_pos;
 	if (IRQ_IS_BASIC(irq_num)) {

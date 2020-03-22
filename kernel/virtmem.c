@@ -6,30 +6,32 @@
 
 #include "common/types.h"
 #include "drivers/mmu.h"
-#include "sys.h"
+#include "system.h"
 #include "virtmem.h"
 
-/* Links the virtual address vadd with the physical address padd using flags. */
-static void mmu_section (const uint32_t vadd, const uint32_t padd, \
+/* Links a virtual address with a physical address using flags. */
+static void mmu_section (const uint32_t vaddr, const uint32_t paddr, \
 	const uint32_t flags)
 {
-	uint32_t rx, ry, rz;
+	uint32_t rx;
+	uint32_t ry;
+	uint32_t rz;
 
-	rx = vadd >> 20;
-	ry = MMUTABLEBASE | (rx << 2);
-	rz = (padd & 0xFFF00000) | 0xC00 | flags | 2;
+	rx = vaddr >> 20;
+	ry = MMU_TABLE | (rx << 2);
+	rz = (paddr & 0xFFF00000) | 0xC00 | flags | 2;
 	PUT32(ry, rz);
 }
 
 /* Initializes the virtual memory. */
 void mmu_init (void)
 {
-	/* Code,
+	/* Code:
 	 * Virtual == Physical Address,
 	 * Enable cache & buffer. */
 	mmu_section(0x00000000, 0x00000000, 0x0000|8|4);
 
-	/* Rest of RAM,
+	/* Rest of RAM:
 	 * Virtual == Physical Address
 	 * Disable Cache & Buffer. */
 	uint32_t addr = 0x00100000;
@@ -38,13 +40,12 @@ void mmu_init (void)
 		addr += 0x00100000;
 	}
 
-	/* Peripherals,
+	/* Peripherals:
 	 * Virtual == Physical Address,
 	 * Disable Cache & Buffer. */
 	mmu_section(0x20000000, 0x20000000, 0x0000);
 	mmu_section(0x20200000, 0x20200000, 0x0000);
 
 	/* Start the MMU Peripheral. */
-	mmu_start(MMUTABLEBASE, 0x00000001|0x1000|0x0004);
-
+	mmu_start(MMU_TABLE, 0x00000001|0x1000|0x0004);
 }

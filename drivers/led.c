@@ -8,7 +8,7 @@
 #include "drivers/led.h"
 #include "drivers/timer.h"
 #include "addr.h"
-#include "sys.h"
+#include "system.h"
 
 /* Initializes the LED. */
 void led_init (void)

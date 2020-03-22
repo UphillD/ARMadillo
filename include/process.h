@@ -1,6 +1,8 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 
+/* Header for process.c & proc.S */
+
 #include "common/list.h"
 
 typedef void (*kthread_function_f)(void);
@@ -41,5 +43,8 @@ void process_init (void);
 
 void create_kernel_thread (kthread_function_f, char *, int);
 void schedule (void);
+
+void switch_to_thread (process_control_block_t * old,	\
+	process_control_block_t * new);
 
 #endif

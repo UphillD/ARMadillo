@@ -15,12 +15,11 @@
 #include "spinlock.h"
 #include "system.h"
 
-static uint32_t next_proc_num = 1;
-#define NEW_PID next_proc_num++;
+static uint32_t curr_pid = 1;
+#define NEW_PID curr_pid++;
 
 extern uint8_t __end;
-extern void switch_to_thread(process_control_block_t * old, process_control_block_t * new);
-extern void test (void);
+
 IMPLEMENT_LIST(pcb);
 
 pcb_list_t run_queue;
@@ -54,13 +53,14 @@ void schedule (void)
 	ENABLE_INTERRUPTS();
 }
 
+/* Initialize processes. */
 void process_init (void)
 {
 	process_control_block_t * main_pcb;
 	INITIALIZE_LIST(run_queue);
 	INITIALIZE_LIST(all_proc_list);
 
-	/* Allocate and initailize the block. */
+	/* Allocate and initialize the pcb. */
 	main_pcb = kmalloc(sizeof(process_control_block_t));
 	main_pcb->stack_page = (void *)&__end;
 	main_pcb->pid = NEW_PID;
@@ -101,7 +101,8 @@ static void reap (void)
 }
 
 /* Creates a new process. */
-void create_kernel_thread (kthread_function_f thread_func, char * name, int name_len)
+void create_kernel_thread (kthread_function_f thread_func,	\
+	char *name, int name_len)
 {
 	process_control_block_t * pcb;
 	struct proc_saved_state_t * new_proc_state;
@@ -119,11 +120,15 @@ void create_kernel_thread (kthread_function_f thread_func, char * name, int name
 
 	/* Set up the stack that will be restored during a context switch. */
 	memset(new_proc_state, 0, sizeof(struct proc_saved_state_t));
-	new_proc_state->lr = (uint32_t)thread_func;	/* lr is used as return address in switch_to_thread. */
-	new_proc_state->sp = (uint32_t)reap;            /* When the thread function returns,
-							 * this reaper routine will clean it up */
-	new_proc_state->cpsr = 0x13 | (8 << 1);         /* Sets the thread to run in supervisor mode
-							 * with IRQs enabled. */
+
+	/* lr is used as return address in switch_to_thread. */
+	new_proc_state->lr = (uint32_t)thread_func;
+	/* When the thread function returns,
+	 * this reaper routine will clean it up */
+	new_proc_state->sp = (uint32_t)reap;
+
+	/* Sets the thread to run in supervisor mode with IRQs enabled. */
+	new_proc_state->cpsr = 0x13 | (8 << 1);
 
 	/* Add the thread to the all process list and the run queue. */
 	append_pcb_list(&all_proc_list, pcb);
@@ -164,9 +169,10 @@ void mutex_init (struct mutex_t * lock)
 void mutex_lock (struct mutex_t * lock)
 {
 	process_control_block_t * new_thread, * old_thread;
-	/* If you don't get the lock, take self off run queue and put on to mutex wait queue. */
+	/* If you don't get the lock, take self off run queue
+	 * and put on to mutex wait queue. */
 	while (!lock_try(&lock->lock)) {
-		/* Get the next thread to run.  For now we are using round-robin. */
+		/* Get the next thread to run using round robin. */
 		DISABLE_INTERRUPTS();
 		new_thread = pop_pcb_list(&run_queue);
 		old_thread = current_process;
@@ -182,7 +188,7 @@ void mutex_lock (struct mutex_t * lock)
 	lock->locker = current_process;
 }
 
-void mutex_unlock(struct mutex_t * lock)
+void mutex_unlock (struct mutex_t * lock)
 {
 	process_control_block_t * thread;
 

@@ -20,7 +20,7 @@
 
 /* Implementation of printf. */
 /* Utilizes stdarg.h to handle variable number of arguments. */
-void kprintf (const char * str, ...)
+void kprintf (const char *str, ...)
 {
 	va_list args;
 	va_start(args, str);
@@ -47,11 +47,10 @@ void kprintf (const char * str, ...)
 		str++;
 	}
 	va_end(args);
-	return;
 }
 
 /* Initializes everything. */
-void init_all (uint32_t atags)
+void init_all (const uint32_t atags)
 {
 	/* Sleep for 1 second. */
 	/* Useful for providing a time buffer between plugging the pi in

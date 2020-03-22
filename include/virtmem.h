@@ -3,7 +3,7 @@
 
 #include "common/types.h"
 
-#define MMUTABLEBASE 0x00004000
+#define MMU_TABLE 0x00004000
 
 void mmu_init (void);
 

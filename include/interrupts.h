@@ -1,9 +1,14 @@
 #ifndef INTERRUPTS_H
 #define INTERRUPTS_H
 
+/* Header for interrupts.c & intr.S */
+
 #include "common/types.h"
 
 #define NUM_IRQS 72
+
+uint32_t exception_vector;
+void move_exception_vector (void);
 
 /* Checks whether interrupts are enabled.
  * Does so by loading the Current Program Status Register

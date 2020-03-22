@@ -41,10 +41,11 @@ move_exception_vector:
 @ Assembly wrapper for the IRQ Handler
 irq_handler_asm_wrapper:
 	sub	lr, lr, #4		@ Adjust return address
-	srsdb	sp!, #0x13		@ Save irq lr and irq spsp to supervisor stack,
-					@ save the resulting stack pointer as the
-					@ current stack pointer
-	cpsid	if, #0x13		@ Switch to supervisor mode with interrupts disabled
+	srsdb	sp!, #0x13		@ Save irq lr and irq spsp to supervisor
+					@  stack, save the resulting stack
+					@  pointer as the current stack pointer
+	cpsid	if, #0x13		@ Switch to supervisor mode with
+					@  interrupts disabled
 	push	{r0 - r3, r12, lr}	@ Push the caller registers to the stack
 	and	r1, sp, #4		@ Make sure stack is 8 byte aligned
 	sub	sp, sp, r1
@@ -52,10 +53,11 @@ irq_handler_asm_wrapper:
 	bl	irq_handler		@ Call the IRQ handler
 	pop	{r1}			@ Get the stack adjustment
 	add	sp, sp, r1
-	pop	{r0-r3, r12, lr}	@ Pop the caller registers
-	rfeia	sp!			@ Load the saved return address and program
-					@ state register from before the interrupt
-					@ from the stack and return
+	pop	{r0 - r3, r12, lr}	@ Pop the caller registers
+	rfeia	sp!			@ Load the saved return address and
+					@  program state register from before
+					@  the interrupt from the stack and
+					@  return
 
 @ Data abort interrupt handler
 data_abort_handler:

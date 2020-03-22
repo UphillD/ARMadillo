@@ -7,7 +7,7 @@
 #include "common/types.h"
 #include "drivers/uart.h"
 #include "addr.h"
-#include "sys.h"
+#include "system.h"
 
 /* Prints a raw character in raw uint32_t format to the console. */
 void uart_putc (const uint32_t c)

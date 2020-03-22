@@ -9,9 +9,9 @@
 #include "common/types.h"
 #include "drivers/timer.h"
 #include "drivers/uart.h"
+#include "mem.h"
 #include "mutex.h"
 #include "process.h"
-#include "sys.h"
 #include "system.h"
 
 static int cmd_option (char *str)
@@ -26,67 +26,68 @@ static int cmd_option (char *str)
 }
 
 struct mutex_t test_mutex;
+bool lock;
 
 void user_process (void)
 {
 	static int i = 0;
-	while (1) {
-		kprintf("This is a user process on its execution #%d!\n", i++);
-		sleep(2000);
+	if (!lock) {
+		while (i < 4) {
+			kprintf("This is a user process on its execution #%d!\n", i++);
+			sleep(1000);
+		}
+	} else {
+		while (i < 4) {
+			if (i % 3 == 0)
+				mutex_lock(&test_mutex);
+			else if (i % 3 == 2)
+				mutex_unlock(&test_mutex);
+			kprintf("This is a user process on its execution #%d!\n", i++);
+			sleep(1000);
+		}
 	}
-	return;
 }
 
 void kernel_process (void)
 {
 	static int i = 0;
-	while (1) {
-		kprintf("This is a kernel process on its execution #%d!\n", i++);
-		sleep(2000);
-	}
-	return;
-}
+	if (!lock) {
+		while (i < 6) {
+			kprintf("This is a kernel process on its execution #%d!\n", i++);
+			sleep(1000);
+		}
+	} else {
+		while (i < 6) {
+			if (i % 3 == 0)
+				mutex_lock(&test_mutex);
+			else if (i % 3 == 2)
+				mutex_unlock(&test_mutex);
 
-void user_process_mutex (void)
-{
-	static int i = 0;
-	while (1) {
-		if (i % 3 == 0)
-			mutex_lock(&test_mutex);
-		else if (i % 3 == 2)
-			mutex_unlock(&test_mutex);
-
-		kprintf("This is a user process on its execution #%d!\n", i++);
-		sleep(1000);
-	}
-}
-
-void kernel_process_mutex (void)
-{
-	static int i = 0;
-	while (1) {
-		if (i % 3 == 0)
-			mutex_lock(&test_mutex);
-		else if (i % 3 == 2)
-			mutex_unlock(&test_mutex);
-
-		kprintf("This is a kernel process on its execution #%d!\n", i++);
-		sleep(1000);
+			kprintf("This is a kernel process on its execution #%d!\n", i++);
+			sleep(1000);
+		}
 	}
 }
 
 void console (void)
 {
+	char *str;
+	str = kmalloc (32 * sizeof(char));
+	int option;
+
 	kprintf("Greetings, and welcome to ARMadillo!\n");
 	kprintf("This is a demo console to illustrate the different capabilities of this OS.\n");
 	kprintf("Please enter 'help' for the available commands!.\n");
-	while(1) {
+
+	while (1) {
 		uart_printstr("$ ");
-		char *str;
 		str = uart_scanstr();
 		kprintf("\n");
-		int option = cmd_option(str);
+
+		option = cmd_option(str);
+
 		switch (option) {
+		/* help */
 		case (0):
 			kprintf("Available commands:\n");
 			kprintf("help\t: prints this message.\n");
@@ -96,36 +97,42 @@ void console (void)
 			kprintf("fpuo\t: illustrates floating point operation capability.\n");
 			kprintf("halt\t: halts.\n");
 			break;
+		/* intr */
 		case (1):
 			kprintf("Setting interrupt..\n");
 			kprintf("You should see the LED pulsing.\n");
 			timer_init();
 			timer_set(500000);
 			break;
+		/* proc */
 		case (2):
 			kprintf("Launching user process..\n");
 			scheduler_init();
 			timer_set(1000000);
+			lock = false;
 			create_kernel_thread(user_process, "USER", 4);
 			kprintf("Launching kernel process..\n");
 			kernel_process();
 			break;
+		/* lock */
 		case (3):
 			kprintf("Launching user process /w lock..\n");
 			mutex_init(&test_mutex);
 			scheduler_init();
 			timer_set(1000000);
-			create_kernel_thread(user_process_mutex, "USER_LOCK", 9);
+			lock = true;
+			create_kernel_thread(user_process, "USER_LOCK", 9);
 			kprintf("Launching kernel process /w lock..\n");
-			kernel_process_mutex();
+			kernel_process();
 			break;
+		/* fpuo */
 		case (4):
 			kprintf("x\t= 256\t= 0x00000100\n");
 			uint32_t x = 0x100;
 			kprintf("y\t= 1.5\t\n");
 			float y = 1.5;
-			kprintf("x * y\t= 384\t= 0x");
-			uart_printhex (fpu_mult(x, y));
+			kprintf("x * y\t= ");
+			kprintf("%d", (int)(fpu_mult(x, y)));
 			kprintf("\n");
 			break;
 		case (9):
