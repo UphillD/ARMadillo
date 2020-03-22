@@ -34,14 +34,14 @@ typedef void (*interrupt_handler_f)(void);
 typedef void (*interrupt_clearer_f)(void);
 
 /* Enum for the number of IRQs. */
-typedef enum {
+enum irq_number_t {
 	SYSTEM_TIMER_1 = 1,
 	USB_CONTROLLER = 9,
 	ARM_TIMER = 64
-} irq_number_t;
+};
 
 /* Struct for the IRQ peripheral. */
-typedef struct {
+struct interrupt_registers_t {
 	uint32_t irq_basic_pending;
 	uint32_t irq_gpu_pending1;
 	uint32_t irq_gpu_pending2;
@@ -52,11 +52,11 @@ typedef struct {
 	uint32_t irq_gpu_disable1;
 	uint32_t irq_gpu_disable2;
 	uint32_t irq_basic_disable;
-} interrupt_registers_t;
+};
 
 void interrupts_init (void);
 
-void register_irq_handler (irq_number_t, interrupt_handler_f, interrupt_clearer_f);
-void unregister_irq_handler (irq_number_t);
+void register_irq_handler (enum irq_number_t, interrupt_handler_f, interrupt_clearer_f);
+void unregister_irq_handler (enum irq_number_t);
 
 #endif

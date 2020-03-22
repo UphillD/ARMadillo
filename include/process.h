@@ -5,7 +5,7 @@
 
 typedef void (*kthread_function_f)(void);
 
-typedef struct {
+struct proc_saved_state_t {
 	uint32_t r0;
 	uint32_t r1;
 	uint32_t r2;
@@ -21,14 +21,14 @@ typedef struct {
 	uint32_t cpsr;
 	uint32_t sp;
 	uint32_t lr;
-} proc_saved_state_t;
+};
 
 /* Creates list for the PCBs. */
 DEFINE_LIST(pcb);
 
 /* Creates a struct for each PCB. */
 typedef struct pcb {
-	proc_saved_state_t * saved_state;	/* Points to the pushed registers of the process in the stack. */
+	struct proc_saved_state_t * saved_state;	/* Points to the pushed registers of the process in the stack. */
 						/* Becomes invalid once the process is running. */
 	void * stack_page;			/* The stack for this process. */
 						/* The stack starts at the end of this page. */

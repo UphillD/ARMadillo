@@ -25,7 +25,7 @@ void sleep (uint32_t msec)
  * IRQ
  */
 
-static timer_registers_t * timer_regs;
+static struct timer_registers_t * timer_regs;
 
 /* The IRQ handler. */
 static void timer_irq_handler (void)
@@ -44,7 +44,7 @@ static void timer_irq_clearer (void)
 /* Registers the timer_irq_handler function as the IRQ handler. */
 void timer_init (void)
 {
-	timer_regs = (timer_registers_t *) SYSTEM_TIMER_BASE;
+	timer_regs = (struct timer_registers_t *) SYSTEM_TIMER_BASE;
 	register_irq_handler(SYSTEM_TIMER_1, timer_irq_handler, timer_irq_clearer);
 }
 
@@ -61,7 +61,7 @@ void timer_set (uint32_t usecs)
 /* Registers the scheduler as the IRQ handler. */
 void scheduler_init (void)
 {
-	timer_regs = (timer_registers_t *) SYSTEM_TIMER_BASE;
+	timer_regs = (struct timer_registers_t *) SYSTEM_TIMER_BASE;
 	register_irq_handler(SYSTEM_TIMER_1, schedule, timer_irq_clearer);
 }
 

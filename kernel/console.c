@@ -25,7 +25,7 @@ static int cmd_option (char * str)
 	else return -1;
 }
 
-mutex_t test_mutex;
+struct mutex_t test_mutex;
 
 void user_process (void)
 {

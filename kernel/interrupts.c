@@ -11,7 +11,7 @@
 #include "interrupts.h"
 #include "system.h"
 
-static interrupt_registers_t * interrupt_regs;
+static struct interrupt_registers_t * interrupt_regs;
 
 static interrupt_handler_f handlers[NUM_IRQS];
 static interrupt_clearer_f clearers[NUM_IRQS];
@@ -34,7 +34,7 @@ bool IRQ_IS_GPU1 (uint32_t irq_num)
 	return (irq_num < 32);
 }
 
-bool IRQ_IS_PENDING (interrupt_registers_t * interrupt_regs, int irq_num)
+bool IRQ_IS_PENDING (struct interrupt_registers_t * interrupt_regs, int irq_num)
 {
 	return ((IRQ_IS_BASIC(irq_num) && ((1 << (irq_num - 64)) & interrupt_regs->irq_basic_pending))	\
 		|| (IRQ_IS_GPU2(irq_num) && ((1 << (irq_num - 32)) & interrupt_regs->irq_gpu_pending2))	\
@@ -44,7 +44,7 @@ bool IRQ_IS_PENDING (interrupt_registers_t * interrupt_regs, int irq_num)
 /* Initialize the interrupts. */
 void interrupts_init (void)
 {
-	interrupt_regs = (interrupt_registers_t *) IRQ_BASIC;
+	interrupt_regs = (struct interrupt_registers_t *) IRQ_BASIC;
 	memset(handlers, 0, sizeof(interrupt_handler_f) * NUM_IRQS);
 	memset(clearers, 0, sizeof(interrupt_clearer_f) * NUM_IRQS);
 	/* Disable all interrupts. */
@@ -99,7 +99,7 @@ void __attribute__ ((interrupt ("FIQ"))) fast_irq_handler (void)
 }
 
 /* Registers the appropriate IRQ handler. */
-void register_irq_handler(irq_number_t irq_num, interrupt_handler_f handler, \
+void register_irq_handler(enum irq_number_t irq_num, interrupt_handler_f handler, \
 	interrupt_clearer_f clearer)
 {
 	uint32_t irq_pos;
@@ -124,7 +124,7 @@ void register_irq_handler(irq_number_t irq_num, interrupt_handler_f handler, \
 }
 
 /* Unregisters the appropriate IRQ handler. */
-void unregister_irq_handler(irq_number_t irq_num)
+void unregister_irq_handler(enum irq_number_t irq_num)
 {
 	uint32_t irq_pos;
 	if (IRQ_IS_BASIC(irq_num)) {

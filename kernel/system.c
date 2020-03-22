@@ -72,7 +72,7 @@ void init_all (uint32_t atags)
 	kprintf("[ OK ] LED initialized.\n");
 
 	/* Initialize Memory Management. */
-	mem_init((atag_t *) atags);
+	mem_init((struct atag_t *) atags);
 	kprintf("[ OK ] Memory Management initialized.\n");
 
 	/* Initialize Interrupts. */

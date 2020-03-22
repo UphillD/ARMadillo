@@ -105,7 +105,7 @@ static void reap (void)
 void create_kernel_thread (kthread_function_f thread_func, char * name, int name_len)
 {
 	process_control_block_t * pcb;
-	proc_saved_state_t * new_proc_state;
+	struct proc_saved_state_t * new_proc_state;
 
 	/* Allocate and initialize the PCB. */
 	pcb = kmalloc(sizeof(process_control_block_t));
@@ -115,11 +115,11 @@ void create_kernel_thread (kthread_function_f thread_func, char * name, int name
 	pcb->proc_name[min(name_len,19)] = 0;
 
 	/* Get the location the stack pointer should be at when this is run. */
-	new_proc_state = pcb->stack_page + PAGE_SIZE - sizeof(proc_saved_state_t);
+	new_proc_state = pcb->stack_page + PAGE_SIZE - sizeof(struct proc_saved_state_t);
 	pcb->saved_state = new_proc_state;
 
 	/* Set up the stack that will be restored during a context switch. */
-	memset(new_proc_state, 0, sizeof(proc_saved_state_t));
+	memset(new_proc_state, 0, sizeof(struct proc_saved_state_t));
 	new_proc_state->lr = (uint32_t)thread_func;	/* lr is used as return address in switch_to_thread. */
 	new_proc_state->sp = (uint32_t)reap;            /* When the thread function returns,
 							 * this reaper routine will clean it up */
@@ -155,14 +155,14 @@ void spinlock_unlock (spinlock_t * lock)
  * Mutex
  */
 
-void mutex_init (mutex_t * lock)
+void mutex_init (struct mutex_t * lock)
 {
 	lock->lock = 1;
 	lock->locker = 0;
 	INITIALIZE_LIST(lock->wait_queue);
 }
 
-void mutex_lock (mutex_t * lock)
+void mutex_lock (struct mutex_t * lock)
 {
 	process_control_block_t * new_thread, * old_thread;
 	/* If you don't get the lock, take self off run queue and put on to mutex wait queue. */
@@ -183,7 +183,7 @@ void mutex_lock (mutex_t * lock)
 	lock->locker = current_process;
 }
 
-void mutex_unlock(mutex_t * lock)
+void mutex_unlock(struct mutex_t * lock)
 {
 	process_control_block_t * thread;
 

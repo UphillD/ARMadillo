@@ -41,17 +41,17 @@ static page_t * all_pages_array;
 page_list_t free_pages;
 
 /* Gets the total memory size from the atags. */
-uint32_t get_mem_size (atag_t * tag) {
+uint32_t get_mem_size (struct atag_t * tag) {
 	while (tag->tag != NONE) {
 		if (tag->tag == MEM)
 			return tag->mem.size;
-	tag = (atag_t *)(((uint32_t *)tag) + tag->tag_size);
+	tag = (struct atag_t *)(((uint32_t *)tag) + tag->tag_size);
 	}
 	return 0;
 }
 
 /* Initializes the memory. */
-void mem_init (atag_t * atags) {
+void mem_init (struct atag_t * atags) {
 	uint32_t mem_size, page_array_len, kernel_pages, page_array_end, i;
 
 	/* Calculate the total number of pages. */
