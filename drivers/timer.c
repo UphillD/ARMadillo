@@ -14,10 +14,11 @@
 
 /* Sleeps for msec millisecond */
 /* Utilizes the 64-bit free running timer */
-void sleep (uint32_t msec)
+void sleep (const uint32_t msec)
 {
 	uint32_t wakeTime = GET32(SYSTEM_TIMER_CLOCK) + msec * 977;
-	while (GET32(SYSTEM_TIMER_CLOCK) < wakeTime);
+	while (GET32(SYSTEM_TIMER_CLOCK) < wakeTime)
+		;
 }
 
 /*
@@ -48,7 +49,7 @@ void timer_init (void)
 }
 
 /* Sets the timer. */
-void timer_set (uint32_t usecs)
+void timer_set (const uint32_t usecs)
 {
 	timer_regs->timer1 = timer_regs->counter_low + usecs;
 }
@@ -62,10 +63,4 @@ void scheduler_init (void)
 {
 	timer_regs = (struct timer_registers_t *) SYSTEM_TIMER_BASE;
 	register_irq_handler(SYSTEM_TIMER_1, schedule, timer_irq_clearer);
-}
-
-/* Sets the scheduler. */
-void scheduler (uint32_t usecs)
-{
-	timer_regs->timer1 = timer_regs->counter_low + usecs;
 }

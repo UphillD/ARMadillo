@@ -2,7 +2,6 @@
  * ARMadillo/kernel/kernel.c
  *
  * Main kernel function.
- *
  */
 
 #include "common/types.h"

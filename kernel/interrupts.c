@@ -1,23 +1,20 @@
 /*
  * ARMadillo/kernel/interrupts.c
  *
- * Provides interrupt functionality.
- *
+ * Setups and utilizes interrupts.
  */
 
 #include "common/types.h"
 #include "common/string.h"
 #include "addr.h"
 #include "interrupts.h"
+#include "intr.h"
 #include "system.h"
 
 static struct interrupt_registers_t * interrupt_regs;
 
 static interrupt_handler_f handlers[NUM_IRQS];
 static interrupt_clearer_f clearers[NUM_IRQS];
-
-extern void move_exception_vector(void);
-extern uint32_t exception_vector;
 
 bool IRQ_IS_BASIC (uint32_t irq_num)
 {
@@ -36,9 +33,12 @@ bool IRQ_IS_GPU1 (uint32_t irq_num)
 
 bool IRQ_IS_PENDING (struct interrupt_registers_t * interrupt_regs, int irq_num)
 {
-	return ((IRQ_IS_BASIC(irq_num) && ((1 << (irq_num - 64)) & interrupt_regs->irq_basic_pending))	\
-		|| (IRQ_IS_GPU2(irq_num) && ((1 << (irq_num - 32)) & interrupt_regs->irq_gpu_pending2))	\
-		|| (IRQ_IS_GPU1(irq_num) && ((1 << (irq_num)) & interrupt_regs->irq_gpu_pending1)));
+	return ((IRQ_IS_BASIC(irq_num) && ((1 << (irq_num - 64)) &	\
+			interrupt_regs->irq_basic_pending))		\
+		|| (IRQ_IS_GPU2(irq_num) && ((1 << (irq_num - 32)) &	\
+			interrupt_regs->irq_gpu_pending2))		\
+		|| (IRQ_IS_GPU1(irq_num) && ((1 << (irq_num)) &		\
+			interrupt_regs->irq_gpu_pending1)));
 }
 
 /* Initialize the interrupts. */
@@ -99,8 +99,8 @@ void __attribute__ ((interrupt ("FIQ"))) fast_irq_handler (void)
 }
 
 /* Registers the appropriate IRQ handler. */
-void register_irq_handler(enum irq_number_t irq_num, interrupt_handler_f handler, \
-	interrupt_clearer_f clearer)
+void register_irq_handler(enum irq_number_t irq_num, \
+	interrupt_handler_f handler, interrupt_clearer_f clearer)
 {
 	uint32_t irq_pos;
 	if (IRQ_IS_BASIC(irq_num)) {
@@ -131,7 +131,7 @@ void unregister_irq_handler(enum irq_number_t irq_num)
 		irq_pos = irq_num - 64;
 		handlers[irq_num] = 0;
 		clearers[irq_num] = 0;
-        /* Setting the disable bit clears the enabled bit. */
+		/* Setting the disable bit clears the enabled bit. */
 		interrupt_regs->irq_basic_disable |= (1 << irq_pos);
 	} else if (IRQ_IS_GPU2(irq_num)) {
 		irq_pos = irq_num - 32;

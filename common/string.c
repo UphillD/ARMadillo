@@ -7,7 +7,7 @@
 #include "common/types.h"
 #include "common/string.h"
 
-/* Sets bytes of memory to value passed in c. */
+/* Sets bytes of memory to value passed in src. */
 void memset (void *dst, const uint8_t src, int bytes)
 {
 	uint8_t *d = dst;

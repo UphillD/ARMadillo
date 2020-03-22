@@ -2,7 +2,6 @@
  * ARMadillo/drivers/uart.c
  *
  * Provides UART0 functionality
- *
  */
 
 #include "common/types.h"
@@ -11,20 +10,21 @@
 #include "sys.h"
 
 /* Prints a raw character in raw uint32_t format to the console. */
-void uart_putc (uint32_t c)
+void uart_putc (const uint32_t c)
 {
-	while (!(GET32(AUX_MU_LSR_REG) & 0x20));
+	while (!(GET32(AUX_MU_LSR_REG) & 0x20))
+		;
 	PUT32(AUX_MU_IO_REG, c);
 }
 
 /* Prints a character to the console. */
-void uart_printc (char ch)
+void uart_printc (const char ch)
 {
 	uart_putc((uint32_t)(ch));
 }
 
 /* Prints a string to the console. */
-void uart_printstr (char *str)
+void uart_printstr (const char *str)
 {
 	while (*str != '\0') {
 		uart_printc(*str);
@@ -37,7 +37,8 @@ void uart_printstr (char *str)
 /* Gets a character in raw uint32_t format from the console. */
 uint32_t uart_getc (void)
 {
-	while (!(GET32(AUX_MU_LSR_REG) & 0x01));
+	while (!(GET32(AUX_MU_LSR_REG) & 0x01))
+		;
 	return GET32(AUX_MU_IO_REG);
 }
 
@@ -91,7 +92,7 @@ void uart_init (void)
 }
 
 /* Prints an 8 digit hex number to the console */
-void uart_printhex (uint32_t hex)
+void uart_printhex (const uint32_t hex)
 {
 	uint32_t i = 32;
 	uint32_t out;

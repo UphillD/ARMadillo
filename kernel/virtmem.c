@@ -1,18 +1,17 @@
 /*
  * ARMadillo/kernel/virtmem.c
  *
- * Provides Virtual Memory Functionality.
- *
+ * Setups the virtual memory.
  */
 
 #include "common/types.h"
 #include "drivers/mmu.h"
-#include "addr.h"
 #include "sys.h"
 #include "virtmem.h"
 
 /* Links the virtual address vadd with the physical address padd using flags. */
-static void mmu_section (uint32_t vadd, uint32_t padd, uint32_t flags)
+static void mmu_section (const uint32_t vadd, const uint32_t padd, \
+	const uint32_t flags)
 {
 	uint32_t rx, ry, rz;
 

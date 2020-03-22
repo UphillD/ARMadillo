@@ -3,12 +3,11 @@
 
 #include "common/types.h"
 
-void sleep (uint32_t);
+void sleep (const uint32_t);
 
-void timer_set (uint32_t);
+void timer_set (const uint32_t);
+
 void timer_init (void);
-
-void scheduler (uint32_t);
 void scheduler_init (void);
 
 struct timer_control_reg_t {

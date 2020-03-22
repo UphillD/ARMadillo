@@ -26,4 +26,4 @@ PUT32:
 .globl halt
 halt:
 	wfe
-	b halt
+	b	halt

@@ -2,7 +2,6 @@
  * ARMadillo/kernel/lock.S
  *
  * Provides some lock functionality.
- *
  */
 
 .section ".text"

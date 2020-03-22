@@ -6,21 +6,21 @@
 #include "atag.h"
 
 /* Base memory structure:
- * 4KB Page size
- * 4KB Kernel stack
- * 1MB Kernel heap
+ * 4KB Page
+ * 4KB Kernel Stack
+ * 1MB Kernel Heap
  */
 enum {
 	PAGE_SIZE		= 4096,
-	KERNEL_HEAP_SIZE	= (1024*1024),
 	KERNEL_STACK_SIZE	= PAGE_SIZE,
+	KERNEL_HEAP_SIZE	= (1024*1024),
 };
 
 /* Flag struct for each memory page. */
 struct page_flags_t {
-	uint8_t allocated: 1;		/* This page is currently allocated. */
-	uint8_t kernel_page: 1;		/* This page is part of the kernel. */
-	uint8_t kernel_heap_page: 1;	/* This page is part of the kernel heap. */
+	uint8_t allocated: 1;		/* currently allocated? */
+	uint8_t kernel_page: 1;		/* part of the kernel? */
+	uint8_t kernel_heap_page: 1;	/* part of the kernel heap? */
 	uint32_t reserved: 29;
 };
 

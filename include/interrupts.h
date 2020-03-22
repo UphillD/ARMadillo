@@ -8,15 +8,14 @@
 /* Checks whether interrupts are enabled.
  * Does so by loading the Current Program Status Register
  *  and checking if bit 7 is clear. */
-inline int INTERRUPTS_ENABLED (void)
+inline bool INTERRUPTS_ENABLED (void)
 {
 	int res;
 	asm volatile ("mrs %[res], CPSR": [res] "=r" (res)::);
-	return ((res >> 7) & 1) == 0;
+	return (((res >> 7) & 1) == 0);
 }
 
-/* Enables IRQs.
- * Executes Change Processor State instruction with flag i. */
+/* Enables IRQs. */
 inline void ENABLE_INTERRUPTS (void)
 {
 	if (!INTERRUPTS_ENABLED())
@@ -24,7 +23,7 @@ inline void ENABLE_INTERRUPTS (void)
 }
 
 /* Disables IRQs. */
-inline void DISABLE_INTERRUPTS(void)
+inline void DISABLE_INTERRUPTS (void)
 {
 	if (INTERRUPTS_ENABLED())
 		asm volatile ("cpsid i");

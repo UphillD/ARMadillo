@@ -2,7 +2,6 @@
  * ARMadillo/kernel/intr.S
  *
  * Creates the exception vector and moves it to 0x0000.
- *
  */
 
 .section ".text"

@@ -2,7 +2,6 @@
  * ARMadillo/kernel/console.c
  *
  * Provides a serial console over UART0 for demo purposes
- *
  */
 
 #include "common/stdlib.h"
@@ -15,14 +14,14 @@
 #include "sys.h"
 #include "system.h"
 
-static int cmd_option (char * str)
+static int cmd_option (char *str)
 {
-	if (!strcmp(str, "help")) return 0;
-	else if (!strcmp(str, "intr")) return 1;
-	else if (!strcmp(str, "proc")) return 2;
-	else if (!strcmp(str, "lock")) return 3;
-	else if (!strcmp(str, "fpuo")) return 4;
-	else if (!strcmp(str, "halt")) return 9;
+	if (!strcmp(str, "help"))	return 0;
+	else if (!strcmp(str, "intr"))	return 1;
+	else if (!strcmp(str, "proc"))	return 2;
+	else if (!strcmp(str, "lock"))	return 3;
+	else if (!strcmp(str, "fpuo"))	return 4;
+	else if (!strcmp(str, "halt"))	return 9;
 	else return -1;
 }
 
@@ -106,7 +105,7 @@ void console (void)
 		case (2):
 			kprintf("Launching user process..\n");
 			scheduler_init();
-			scheduler(1000000);
+			timer_set(1000000);
 			create_kernel_thread(user_process, "USER", 4);
 			kprintf("Launching kernel process..\n");
 			kernel_process();
@@ -115,7 +114,7 @@ void console (void)
 			kprintf("Launching user process /w lock..\n");
 			mutex_init(&test_mutex);
 			scheduler_init();
-			scheduler(1000000);
+			timer_set(1000000);
 			create_kernel_thread(user_process_mutex, "USER_LOCK", 9);
 			kprintf("Launching kernel process /w lock..\n");
 			kernel_process_mutex();

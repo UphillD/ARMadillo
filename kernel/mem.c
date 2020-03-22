@@ -2,7 +2,6 @@
  * ARMadillo/kernel/mem.c
  *
  * Provides memory management functionality.
- *
  */
 
 #include "common/stdlib.h"

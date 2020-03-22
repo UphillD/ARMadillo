@@ -1,8 +1,7 @@
 /*
  * ARMadillo/kernel/process.c
  *
- * Provides process functionality
- *
+ * Provides process functionality.
  */
 
 #include "common/stdlib.h"
@@ -37,7 +36,7 @@ void schedule (void)
 
 	/* If the run queue is empty, just reschedule. */
 	if (size_pcb_list(&run_queue) == 0) {
-		scheduler(10000);
+		timer_set(10000);
 		ENABLE_INTERRUPTS();
 		return;
 	}
@@ -74,7 +73,7 @@ void process_init (void)
 	current_process = main_pcb;
 
 	/* Set the scheduler for every 10 ms (repeatable). */
-	scheduler(10000);
+	timer_set(10000);
 }
 
 static void reap (void)

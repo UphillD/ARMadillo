@@ -2,7 +2,6 @@
  * ARMadillo/kernel/boot.S
  *
  * The bootloader.
- *
  */
 
 .section ".text.boot"
