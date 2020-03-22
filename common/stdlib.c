@@ -1,8 +1,7 @@
 /*
  * ARMadillo/common/stdlib.c
  *
- * Provides any required generic functionality.
- *
+ * Provides generic functionality.
  */
 
 #include "common/stdlib.h"

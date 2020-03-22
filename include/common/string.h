@@ -3,10 +3,10 @@
 
 #include "common/types.h"
 
-void memset (void *, uint8_t, int);
+void memset (void *, const uint8_t, int);
 void memcpy (void *, const void *, int);
 
-int strcmp (char *, char *);
+int strcmp (const char *, const char *);
 size_t strlen (const char *);
 void strrev (char *);
 

@@ -2,7 +2,6 @@
  * ARMadillo/drivers/led.c
  *
  * Provides LED functionality
- *
  */
 
 #include "common/types.h"

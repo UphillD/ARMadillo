@@ -1,8 +1,7 @@
 /*
  * ARMadillo/kernel/system.c
  *
- * Provides some core functionality.
- *
+ * Provides core functionality in C.
  */
 
 #include <stdarg.h>

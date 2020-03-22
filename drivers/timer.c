@@ -1,8 +1,7 @@
 /*
  * ARMadillo/drivers/timer.c
  *
- * Provides timer functionality
- *
+ * Setups and utilizes the ARM timer.
  */
 
 #include "common/types.h"

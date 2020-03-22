@@ -8,26 +8,26 @@
 /* Checks whether interrupts are enabled.
  * Does so by loading the Current Program Status Register
  *  and checking if bit 7 is clear. */
-__inline__ int INTERRUPTS_ENABLED (void)
+inline int INTERRUPTS_ENABLED (void)
 {
 	int res;
-	__asm__ __volatile__("mrs %[res], CPSR": [res] "=r" (res)::);
+	asm volatile ("mrs %[res], CPSR": [res] "=r" (res)::);
 	return ((res >> 7) & 1) == 0;
 }
 
 /* Enables IRQs.
  * Executes Change Processor State instruction with flag i. */
-__inline__ void ENABLE_INTERRUPTS (void)
+inline void ENABLE_INTERRUPTS (void)
 {
 	if (!INTERRUPTS_ENABLED())
-		__asm__ __volatile__("cpsie i");
+		asm volatile ("cpsie i");
 }
 
 /* Disables IRQs. */
-__inline__ void DISABLE_INTERRUPTS(void)
+inline void DISABLE_INTERRUPTS(void)
 {
 	if (INTERRUPTS_ENABLED())
-		__asm__ __volatile__("cpsid i");
+		asm volatile ("cpsid i");
 }
 
 typedef void (*interrupt_handler_f)(void);
@@ -37,7 +37,7 @@ typedef void (*interrupt_clearer_f)(void);
 enum irq_number_t {
 	SYSTEM_TIMER_1 = 1,
 	USB_CONTROLLER = 9,
-	ARM_TIMER = 64
+	ARM_TIMER = 64,
 };
 
 /* Struct for the IRQ peripheral. */

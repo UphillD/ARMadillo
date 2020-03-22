@@ -1,13 +1,12 @@
 /*
  * ARMadillo/drivers/mmu.S
  *
- * Setups the MMU peripheral.
- *
+ * Setups the memory management unit.
  */
 
 .section ".text"
 
-@ Starts the MMU peripheral.
+@ Starts the MMU.
 .globl mmu_start
 mmu_start:
 	mov	r2, #0
@@ -28,7 +27,7 @@ mmu_start:
 
 	bx	lr
 
-@ Stops the MMU peripheral.
+@ Stops the MMU.
 .globl mmu_stop
 mmu_stop:
 	mcr	p15, 0, r2, c1, c0, 0
@@ -36,12 +35,4 @@ mmu_stop:
 	bic	r2, #0x0004
 	bic	r2, #0x0001
 	mcr	p15, 0, r2, c1, c0, 0
-	bx	lr
-
-@ Invalidates TLBs
-.globl tlbs_invalidate
-tlbs_invalidate:
-	mov	r2, #0
-	mcr	p15, 0, r2, c8, c7, 0	@ Invalidate TLB
-	mcr	p15, 0, r2, c7, c10, 4	@ DSB ??
 	bx	lr

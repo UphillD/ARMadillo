@@ -1,19 +1,18 @@
 /*
  * ARMadillo/common/string.c
  *
- * Provides any required string-related functionality.
- *
+ * Provides string and memory related functionality.
  */
 
 #include "common/types.h"
 #include "common/string.h"
 
 /* Sets bytes of memory to value passed in c. */
-void memset (void *dst, uint8_t c, int bytes)
+void memset (void *dst, const uint8_t src, int bytes)
 {
 	uint8_t *d = dst;
 	while (bytes--)
-		*d++ = c;
+		*d++ = src;
 }
 
 /* Copies bytes of memory from src to dest. */
@@ -26,7 +25,7 @@ void memcpy (void *dst, const void *src, int bytes)
 }
 
 /* Compares two strings. */
-int strcmp (char *str1, char *str2)
+int strcmp (const char *str1, const char *str2)
 {
 	int i = 0;
 
