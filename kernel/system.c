@@ -9,6 +9,7 @@
 
 #include "common/stdlib.h"
 #include "common/types.h"
+#include "drivers/fpu.h"
 #include "drivers/led.h"
 #include "drivers/timer.h"
 #include "drivers/uart.h"

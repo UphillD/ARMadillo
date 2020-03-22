@@ -9,6 +9,7 @@
 #include "common/string.h"
 #include "drivers/timer.h"
 #include "interrupts.h"
+#include "lock.h"
 #include "mem.h"
 #include "mutex.h"
 #include "process.h"
@@ -141,7 +142,7 @@ void spinlock_init (spinlock_t * lock)
 
 void spinlock_lock (spinlock_t * lock)
 {
-	while (!try_lock(lock))
+	while (!lock_try(lock))
 		;
 }
 
@@ -165,7 +166,7 @@ void mutex_lock (mutex_t * lock)
 {
 	process_control_block_t * new_thread, * old_thread;
 	/* If you don't get the lock, take self off run queue and put on to mutex wait queue. */
-	while (!try_lock(&lock->lock)) {
+	while (!lock_try(&lock->lock)) {
 		/* Get the next thread to run.  For now we are using round-robin. */
 		DISABLE_INTERRUPTS();
 		new_thread = pop_pcb_list(&run_queue);
