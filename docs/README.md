@@ -7,7 +7,7 @@
 
 ![arch: armv6](arch-armv6-blue.svg)
 ![cpu: arm1176jzf-s](cpu-arm1176jzf--s-9cf.svg)
-![platform: raspberry pi zero](platform-Raspberry Pi Zero-red.svg)
+![platform: raspberry pi zero](platform-raspberry-pi-zero-red.svg)
 
 A minimal ARM OS for the Raspberry Pi Zero.
 
@@ -42,6 +42,7 @@ Currently, it:
 
 Once the OS is launched and everything is initialized, execution is passed to
 a demonstration console that can be accessed through /dev/ttyUSB0.
+
 The demo console accepts a few commands:
 
 	help
@@ -122,6 +123,4 @@ Coding style mostly follows the [linux kernel coding style](https://www.kernel.o
 
 Shield badges provided by [Shields.io](https://shields.io/).
 
-[Back to TOC](#Table-of-Contents)
-
-[![Back to Top][top.png]][#top]
+[[[top.png]]](#Table-of-Contents)
