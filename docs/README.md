@@ -123,4 +123,4 @@ Coding style mostly follows the [linux kernel coding style](https://www.kernel.o
 
 Shield badges provided by [Shields.io](https://shields.io/).
 
-[[[/top.png]]](#Table-of-Contents)
+[⇯ Back to Top](#Table-of-Contents)
