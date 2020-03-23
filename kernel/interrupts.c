@@ -10,7 +10,7 @@
 #include "interrupts.h"
 #include "system.h"
 
-static struct interrupt_registers_t * interrupt_regs;
+static struct interrupt_registers_t *interrupt_regs;
 
 static interrupt_handler_f handlers[NUM_IRQS];
 static interrupt_clearer_f clearers[NUM_IRQS];
@@ -30,7 +30,7 @@ bool IRQ_IS_GPU1 (uint32_t irq_num)
 	return (irq_num < 32);
 }
 
-bool IRQ_IS_PENDING (struct interrupt_registers_t * interrupt_regs, int irq_num)
+bool IRQ_IS_PENDING (struct interrupt_registers_t *interrupt_regs, int irq_num)
 {
 	return ((IRQ_IS_BASIC(irq_num) && ((1 << (irq_num - 64)) &	\
 			interrupt_regs->irq_basic_pending))		\

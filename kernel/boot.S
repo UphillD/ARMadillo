@@ -28,7 +28,7 @@ _start:
 	mov	r8, #0
 	b	2f
 1:
-	stmia	r4!, {r5-r8}
+	stmia	r4!, {r5 - r8}
 2:
 	cmp	r4, r9
 	blo	1b

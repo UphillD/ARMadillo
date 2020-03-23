@@ -17,7 +17,8 @@
 static heap_segment_t *heap_segment_list_head;
 
 /* Initializes the heap. */
-static void heap_init(uint32_t heap_start) {
+static void heap_init (uint32_t heap_start)
+{
 	heap_segment_list_head = (heap_segment_t *) heap_start;
 	memset(heap_segment_list_head, 0, sizeof(heap_segment_t));
 	heap_segment_list_head->segment_size = KERNEL_HEAP_SIZE;
@@ -36,7 +37,8 @@ static page_t *all_pages_array;
 page_list_t free_pages;
 
 /* Gets the total memory size from the atags. */
-uint32_t get_mem_size (struct atag_t *tag) {
+uint32_t get_mem_size (struct atag_t *tag)
+{
 	while (tag->tag != NONE) {
 		if (tag->tag == MEM)
 			return tag->mem.size;
@@ -46,7 +48,8 @@ uint32_t get_mem_size (struct atag_t *tag) {
 }
 
 /* Initializes the memory. */
-void mem_init (struct atag_t *atags) {
+void mem_init (struct atag_t *atags)
+{
 
 	uint32_t i;
 	uint32_t mem_size;
@@ -74,15 +77,16 @@ void mem_init (struct atag_t *atags) {
 	 * Start with kernel pages, stacks, and page metadata. */
 	kernel_pages = (page_array_end) / PAGE_SIZE;
 	for (i = 0; i < kernel_pages; i++) {
-		all_pages_array[i].vaddr_mapped = i * PAGE_SIZE;    /* Identity map the kernel pages. */
+		/* Identity map the kernel pages. */
+		all_pages_array[i].vaddr_mapped = i * PAGE_SIZE;
 		all_pages_array[i].flags.allocated = 1;
 		all_pages_array[i].flags.kernel_page = 1;
 	}
 
 	/* Reserve 1 MB for the kernel heap. */
 	for (; i < kernel_pages + (KERNEL_HEAP_SIZE / PAGE_SIZE); i++) {
-		all_pages_array[i].vaddr_mapped = i * PAGE_SIZE;
 		/* Identity map the kernel heap pages. */
+		all_pages_array[i].vaddr_mapped = i * PAGE_SIZE;
 		all_pages_array[i].flags.allocated = 1;
 		all_pages_array[i].flags.kernel_heap_page = 1;
 	}
@@ -96,7 +100,6 @@ void mem_init (struct atag_t *atags) {
 
 	/* Initialize the heap. */
 	heap_init(page_array_end);
-	return;
 }
 
 /* Allocates a page. */
@@ -127,7 +130,7 @@ void *alloc_page (void)
 /* Frees a page. */
 void free_page (void *ptr)
 {
-    page_t * page;
+    page_t *page;
 
     /* Get page metadata from the physical address. */
     page = all_pages_array + ((uint32_t)ptr / PAGE_SIZE);
@@ -143,6 +146,7 @@ void *kmalloc (uint32_t bytes)
 {
 	heap_segment_t *curr;
 	heap_segment_t *best = NULL;
+
 	int diff;
 	int best_diff = 0x7fffffff;
 
@@ -206,9 +210,8 @@ void kfree (void *ptr)
 	/* try to coalesce segments to the right. */
 	while (seg->next != NULL && !seg->next->is_allocated) {
 		seg->segment_size += seg->next->segment_size;
-		if (seg->next->next != NULL) {
+		if (seg->next->next != NULL)
 			seg->next->next->prev = seg;
-		}
 		seg->next = seg->next->next;
 	}
 }

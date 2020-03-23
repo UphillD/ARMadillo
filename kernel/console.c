@@ -71,14 +71,17 @@ void kernel_process (void)
 
 void console (void)
 {
+	char *str;
 	int option;
+
+	static uint32_t x;
+	static float y;
 
 	kprintf("Greetings, and welcome to ARMadillo!\n");
 	kprintf("This is a demo console to illustrate the different capabilities of this OS.\n");
 	kprintf("Please enter 'help' for the available commands!.\n");
 
 	while (1) {
-		char *str;
 
 		kprintf("$ ");
 		str = uart_scanstr();
@@ -127,14 +130,13 @@ void console (void)
 			break;
 		/* fpuo */
 		case (4):
-			kprintf("x\t= 256\t= 0x00000100\n");
-			uint32_t x = 0x100;
-			kprintf("y\t= 1.5\t\n");
-			float y = 1.5;
-			kprintf("x * y\t= ");
-			kprintf("%d", (int)(fpu_mult(x, y)));
-			kprintf("\n");
+			x = 0x100;
+			y = 1.5;
+			kprintf("x\t= 256\n");
+			kprintf("y\t= 1.5\n");
+			kprintf("x * y\t = %d\n", (int)(fpu_mult(x, y)));
 			break;
+		/* halt */
 		case (9):
 			kprintf("Goodbye!\n");
 			halt();

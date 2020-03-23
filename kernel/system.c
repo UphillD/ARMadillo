@@ -86,7 +86,5 @@ void init_all (const uint32_t atags)
 	kprintf("[ OK ] Virtual Memory initialized.\n");
 
 	kprintf("\n");
-
-	return;
 }
 

@@ -21,13 +21,12 @@ static uint32_t curr_pid = 1;
 extern uint8_t __end;
 
 IMPLEMENT_LIST(pcb);
-
 pcb_list_t run_queue;
 pcb_list_t all_proc_list;
 
 process_control_block_t *current_process;
 
-/* (Context) switch from one process to another. */
+/* Schedule a context switch from one process to another. */
 void schedule (void)
 {
 	DISABLE_INTERRUPTS();
