@@ -1,7 +1,7 @@
 /*
  * ARMadillo/kernel/console.c
  *
- * Provides a serial console over UART0 for demo purposes
+ * Provides a serial console over UART0 for demo purposes.
  */
 
 #include "common/stdlib.h"

@@ -6,7 +6,7 @@
 /* Struct for the mutex lock. */
 struct mutex_t {
 	int lock;
-	process_control_block_t * locker;
+	process_control_block_t *locker;
 	pcb_list_t wait_queue;
 };
 

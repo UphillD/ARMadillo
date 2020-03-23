@@ -10,16 +10,16 @@
 .globl mmu_start
 mmu_start:
 	mov	r2, #0
-	mcr	p15, 0, r2, c7, c7, 0	@ invalidate caches
-	mcr	p15, 0, r2, c8, c7, 0	@ invalidate tlb
+	mcr	p15, 0, r2, c7, c7, 0	@ Invalidate caches
+	mcr	p15, 0, r2, c8, c7, 0	@ Invalidate TLB
 	mcr	p15, 0, r2, c7, c10, 4	@ DSB ??
 
 	mvn	r2, #0
 	bic	r2, #0xC
-	mcr	p15, 0, r2, c3, c0, 0	@ domain
+	mcr	p15, 0, r2, c3, c0, 0	@ Domain
 
-	mcr	p15, 0, r0, c2, c0, 0	@ tlb base
-	mcr	p15, 0, r0, c2, c0, 1	@ tlb base
+	mcr	p15, 0, r0, c2, c0, 0	@ TLB base
+	mcr	p15, 0, r0, c2, c0, 1	@ TLB base
 
 	mrc	p15, 0, r2, c1, c0, 0
 	orr	r2, r2, r1

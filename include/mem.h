@@ -39,8 +39,8 @@ typedef struct heap_segment {
 	struct heap_segment * next;
 	struct heap_segment * prev;
 	uint32_t is_allocated;		/* This segment is allocated. */
-	uint32_t segment_size;		/* Size of this segment, including
-					 *  this header. */
+	uint32_t segment_size;		/* Size of this segment,
+					 *  including this header. */
 } heap_segment_t;
 
 void mem_init (struct atag_t *);
