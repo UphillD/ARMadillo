@@ -5,6 +5,10 @@
 ![status: working](status-working-green.svg)
 ![build: passing](build-passing-brightgreen.svg)
 
+![arch: armv6](arch-armv6-blue.svg)
+![cpu: arm1176jzf-s](cpu-arm1176jzf--s-9cf.svg)
+![platform: raspberry pi zero](platform-Raspberry Pi Zero-red.svg)
+
 A minimal ARM OS for the Raspberry Pi Zero.
 
 This is my personal bonus project for the course "Embedded Systems Design" [ECE1258].
@@ -43,18 +47,22 @@ The demo console accepts a few commands:
 	help
 		Displays a list of available commands
 	intr
-		Setups a repeatable IRQ interrupt that blinks the LED light of the Pi once every second.
+		Setups a repeatable IRQ interrupt that blinks the LED light of
+		the Pi once every second.
 	proc
-		Setups the scheduler, launches a kernel and a user process and switches between them seamlessly.
+		Setups the scheduler, launches a kernel and a user process and
+		switches between them seamlessly.
 	lock
 		Same as proc, but also utilizes mutex locks.
 		Control is still switched continuously between the two processes;
 		however, they share a lock, and they sequentially un/lock it.
 	fpuo
 		Performs a floating point operation using the floating point coprocessor.
-		Proof can be found in the kernel.list file that is produced during compilation if one looks for the fpu_mult details.
-		Note that separate function must be used to produce the result (fpu_mult in common/stdlib.c),
-		otherwise the compiler just precalculates the result.
+		Proof can be found in the kernel.list file that is produced during
+		compilation if one looks for the fpu_mult details.
+		Note that separate function must be used to produce the result
+		(fpu_mult in common/stdlib.c), otherwise the compiler just
+		precalculates the result.
 
 ## Requirements
 
@@ -112,6 +120,8 @@ The demo console accepts a few commands:
 
 Coding style mostly follows the [linux kernel coding style](https://www.kernel.org/doc/html/v4.10/process/coding-style.html).
 
-Shield badges provided by [Shields.IO](https://shields.io/)
+Shield badges provided by [Shields.io](https://shields.io/).
 
 [Back to TOC](#Table-of-Contents)
+
+[![Back to Top][top.png]][#top]
