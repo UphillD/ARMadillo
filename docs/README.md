@@ -2,12 +2,23 @@
 
 ##
 
-![status: work in progress](https://img.shields.io/badge/status-work%20in%20progress-orange)
-![build: passing](https://img.shields.io/badge/build-passing-green)
+![status: working](status-working-green.svg)
+![build: passing](build-passing-brightgreen.svg)
 
 A minimal ARM OS for the Raspberry Pi Zero.
 
 This is my personal bonus project for the course "Embedded Systems Design" [ECE1258].
+
+## Table of Contents
+
+1. [Features](#Features)
+2. [Demo Console](#Demo-Console)
+3. [Requirements](#Requirements)
+4. [Installation](#Installation)
+5. [Project Tree](#Project-Tree)
+6. [References](#References)
+7. [Resources](#Resources)
+8. [Miscellaneous](#Miscellaneous)
 
 ## Features
 
@@ -96,3 +107,11 @@ The demo console accepts a few commands:
 [RaspberryPi Zero BareMetal Examples by dwelch67](https://github.com/dwelch67/raspberrypi-zero)
 
 [Building an OS for the RaspberryPi by jsandler18](https://jsandler18.github.io/)
+
+## Miscellaneous
+
+Coding style mostly follows the [linux kernel coding style](https://www.kernel.org/doc/html/v4.10/process/coding-style.html).
+
+Shield badges provided by [Shields.IO](https://shields.io/)
+
+[Back to TOC](#Table-of-Contents)
